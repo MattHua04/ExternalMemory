@@ -14,6 +14,9 @@ Start:
 NormalTest:
 ; Init
 ; ==========================
+    LOADI 0 ; Clear AC
+    OUT Hex0
+
     ; Set memory size
     LOADI 100
     OUT ExtMemResize
@@ -30,9 +33,11 @@ NormalTest:
     ; Set metadata to unavailable, /read, write
     ADDI &B101
     OUT ExtMemMeta
+
     ; Set address to 0
-LOADI 0
+    LOADI 0
     OUT ExtMemAddr
+
     ; Write some data to external memory
     LOADI &H12
     OUT Hex0
@@ -52,6 +57,7 @@ LOADI 0
     ; Set address to 11
     LOADI 11
     OUT ExtMemAddr
+
     ; Write some data to external memory
     LOADI &H34
     OUT Hex0
@@ -71,6 +77,7 @@ LOADI 0
     ; Set address to 22
     LOADI 22
     OUT ExtMemAddr
+
     ; Write some data to external memory
     LOADI &H56
     OUT Hex0
@@ -93,6 +100,7 @@ LOADI 0
     LOADI &HAB
     SHIFT 3
     OUT ExtMemMeta
+
     ; Read from address 11
     LOADI 11
     OUT ExtMemAddr
@@ -143,6 +151,9 @@ LOADI 0
 StackTest:
 ; Init
 ; ==========================
+    LOADI 0 ; Clear AC
+    OUT Hex0
+
     ; Set memory size
     LOADI 100
     OUT ExtMemResize
@@ -195,6 +206,9 @@ StackTest:
 QueueTest:
 ; Init
 ; ==========================
+    LOADI 0 ; Clear AC
+    OUT Hex0
+    
     ; Set memory size
     LOADI 100
     OUT ExtMemResize
@@ -248,6 +262,9 @@ QueueTest:
 CircularTest:
 ; Init
 ; ==========================
+    LOADI 0 ; Clear AC
+    OUT Hex0
+    
     ; Set memory size
     LOADI 100
     OUT ExtMemResize
