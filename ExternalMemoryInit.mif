@@ -1,0 +1,11 @@
+-- Memory Initialization File (MIF)
+
+WIDTH=32;           -- 32-bit wide data
+DEPTH=65536;        -- 65536 addressable words
+
+ADDRESS_RADIX=HEX;  -- Address is in hexadecimal
+DATA_RADIX=HEX;     -- Data is in hexadecimal
+
+CONTENT BEGIN
+    [0000..FFFF] : 0;  -- Set all addresses from 0x0000 to 0xFFFF to 0
+END;
