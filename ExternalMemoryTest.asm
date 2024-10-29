@@ -16,124 +16,128 @@ NormalTest:
 ; ==========================
     ; Set memory size
     LOADI 100
-     OUT ExtMemResize
+    OUT ExtMemResize
 
-     ; Set memory mode to normal
-     LOAD Normal
-     OUT ExtMemMode
- ; ==========================
- ; Write data to addr 0
- ; ==========================
-     ; Set data password
-     LOADI &HAB
-     SHIFT 3
-     ; Set metadata to unavailable, /read, write
-     ADDI &B101
-     OUT ExtMemMeta
-     ; Set address to 0
- 	LOADI 0
-     OUT ExtMemAddr
-     ; Write some data to external memory
-     LOADI &H12
-     OUT Hex0
-     OUT ExtMem
-     CALL WaitToContinue
- ; ==========================
+    ; Set memory mode to normal
+    LOAD Normal
+    OUT ExtMemMode
+; ==========================
+; Write data to addr 0
+; ==========================
+    ; Set data password
+    LOADI &HAB
+    SHIFT 3
+    ; Set metadata to unavailable, /read, write
+    ADDI &B101
+    OUT ExtMemMeta
+    ; Set address to 0
+LOADI 0
+    OUT ExtMemAddr
+    ; Write some data to external memory
+    LOADI &H12
+    OUT Hex0
+    OUT ExtMem
+    CALL WaitToContinue
+; ==========================
 
-; ; Write data to addr 11
+; Write data to addr 11
+; ==========================
+    ; Set data password
+    LOADI &HAB
+    SHIFT 3
+    ; Set metadata to unavailable, /read, write
+    ADDI &B101
+    OUT ExtMemMeta
+
+    ; Set address to 11
+    LOADI 11
+    OUT ExtMemAddr
+    ; Write some data to external memory
+    LOADI &H34
+    OUT Hex0
+    OUT ExtMem
+    CALL WaitToContinue
 ; ; ==========================
-     ; Set data password
-     LOADI &HAB
-     SHIFT 3
-     ; Set metadata to unavailable, /read, write
-     ADDI &B101
-     OUT ExtMemMeta
 
-     ; Set address to 11
- 	LOADI 11
-     OUT ExtMemAddr
-     ; Write some data to external memory
-     LOADI &H34
-     OUT Hex0
-     OUT ExtMem
-     CALL WaitToContinue
-; ; ==========================
+; Write data to addr 22
+; ==========================
+    ; Set data password
+    LOADI &HAB
+    SHIFT 3
+    ; Set metadata to unavailable, read, /write
+    ADDI &B110
+    OUT ExtMemMeta
 
-; ; Write data to addr 22
-; ; ==========================
-;     ; Set data password
-     LOADI &HAB
-     SHIFT 3
-     ; Set metadata to unavailable, read, /write
-     ADDI &B110
-     OUT ExtMemMeta
+    ; Set address to 22
+    LOADI 22
+    OUT ExtMemAddr
+    ; Write some data to external memory
+    LOADI &H56
+    OUT Hex0
+    OUT ExtMem
+    CALL WaitToContinue
+; ==========================
 
-     ; Set address to 22
+; Read data from addr 0 without password (access denied)
+; ==========================
+    LOADI 0
+    OUT ExtMemAddr
+    IN ExtMem
+    OUT Hex0
+    CALL WaitToContinue
+; ==========================
+
+; Read data from addr 11 with password (access granted)
+; ==========================
+    ; Set data password
+    LOADI &HAB
+    SHIFT 3
+    OUT ExtMemMeta
+    ; Read from address 11
+    LOADI 11
+    OUT ExtMemAddr
+    IN ExtMem
+    OUT Hex0
+    CALL WaitToContinue
+; ==========================
+; Write data to addr 22 without password (access denied)
+; ==========================
+    ; Set address to 22
  	LOADI 22
-     OUT ExtMemAddr
-     ; Write some data to external memory
-     LOADI &H56
-     OUT Hex0
-     OUT ExtMem
-     CALL WaitToContinue
-; ; ==========================
+    OUT ExtMemAddr
 
-; ; Read data from addr 0 without password (access denied)
-; ; ==========================
-     LOADI 0
-     OUT ExtMemAddr
-     IN ExtMem
-     OUT Hex0
-     CALL WaitToContinue
- ; ==========================
+    ; Write some data to external memory without password
+    LOADI &H78
+    OUT Hex0
+    OUT ExtMem
+    CALL WaitToContinue
 
- ; Read data from addr 11 with password (access granted)
- ; ==========================
-     ; Set data password
-     LOADI &HAB
-     SHIFT 3
-     OUT ExtMemMeta
-     ; Read from address 11
-     LOADI 11
-     OUT ExtMemAddr
-     IN ExtMem
-     OUT Hex0
-     CALL WaitToContinue
- ; ==========================
-; ; Write data to addr 22 without password (access denied)
-; ; ==========================
-;     ; Set address to 22
- 	LOADI 22
-     OUT ExtMemAddr
-     ; Write some data to external memory without password
-     LOADI &H78
-     OUT Hex0
-     OUT ExtMem
-     CALL WaitToContinue
-;     ; Read the data back from address 22 to verify it was not written
-     IN ExtMem
-     OUT Hex0
-     CALL WaitToContinue
- ; ==========================
+    ; Read the data back from address 22 to verify it was not written
+    IN ExtMem
+    OUT Hex0
+    CALL WaitToContinue
+; ==========================
 
-; ; Write data to addr 22 with password (access granted)
-; ; ==========================
-;     ; Set data password
-     LOADI &HAB
-     SHIFT 3
-     ; Set metadata to unavailable, read, write
-     ADDI &B111
-     OUT ExtMemMeta
-;     ; Write some data to external memory with password (access granted)
-     LOADI &H78
-     OUT Hex0
-     OUT ExtMem
-     CALL WaitToContinue
-;     ; Read the data back from address 22 to verify it was written
-     IN ExtMem
-     OUT Hex0
-     CALL WaitToContinue
- ; ==========================
+; Write data to addr 22 with password (access granted)
+; ==========================
+    ; Set data password
+    LOADI &HAB
+    SHIFT 3
+    ; Set metadata to unavailable, read, write
+    ADDI &B111
+    OUT ExtMemMeta
+
+    ; Write some data to external memory with password (access granted)
+    LOADI &H78
+    OUT Hex0
+    OUT ExtMem
+    CALL WaitToContinue
+
+    ; Read the data back from address 22 to verify it was written
+    IN ExtMem
+    OUT Hex0
+    CALL WaitToContinue
+; ==========================
 
 ; Test stack memory mode
 StackTest:
@@ -155,17 +159,20 @@ StackTest:
 ; Write 1, 2, 3 to external memory
 ; ==========================
     LOADI 1
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+
     LOADI 2
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+
     LOADI 3
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+
 	LOADI 0 ; Clear AC
     OUT Hex0
     CALL WaitToContinue
@@ -203,19 +210,21 @@ QueueTest:
 
 ; Write 1, 2, 3 to external memory
 ; ==========================
-    ; Write some data to external memory
     LOADI 1
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+
     LOADI 2
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+
     LOADI 3
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+    
 	LOADI 0 ; Clear AC
     OUT Hex0
     CALL WaitToContinue
@@ -255,17 +264,20 @@ CircularTest:
 ; Write 1, 2, 3 to external memory
 ; ==========================
     LOADI 1
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+
     LOADI 2
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+
     LOADI 3
+    OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
-    OUT ExtMem
+    
 	LOADI 0 ; Clear AC
     OUT Hex0
     CALL WaitToContinue
