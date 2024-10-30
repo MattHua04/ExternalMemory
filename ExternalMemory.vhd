@@ -88,8 +88,8 @@ begin
             width_B => 32,
             numwords_a => 65536,
             numwords_b => 65536,
-            outdata_reg_a => "CLOCK0",
-            outdata_reg_b => "CLOCK0",
+            outdata_reg_a => "UNREGISTERED",
+            outdata_reg_b => "UNREGISTERED",
             widthad_a => 16,
             widthad_b => 16,
             init_file => "ExternalMemoryInit.mif"
