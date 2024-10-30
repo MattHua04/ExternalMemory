@@ -31,7 +31,7 @@
     * Data at the read address is marked available
     * __If the stack is not empty__:
         * Decrements both the read and write addresses
-* A value sent to address ```0x70``` is written to memory at the write address __(always writes)__
+* A value sent to address ```0x70``` is written to memory at the write address __(only if the stack is not full, write permissions at target address ignored)__
     * __If the stack is not full__:
         * Increments both the read and write addresses
 
@@ -40,7 +40,7 @@
     * Data at the read address is marked available
     * __If the read address is behind the write address__:
         * Increments/wraps the read address
-* A value sent to address ```0x70``` is written to memory at the write address __(always writes)__
+* A value sent to address ```0x70``` is written to memory at the write address __(only if the queue is not full, write permissions at target address ignored)__
     * __If the queue is not full__:
         * Increments/wraps the write address
 
@@ -49,7 +49,7 @@
     * Data at the read address is marked available
     * __If the read address is behind the write address__:
         * Increments/wraps the read address
-* A value sent to address ```0x70``` is written to memory at the write address __(always writes)__
+* A value sent to address ```0x70``` is written to memory at the write address __(only if the circular buffer is not full, write permissions at target address ignored)__
     * Increments/wraps the write address
     * __If the circular buffer is full__:
         * Increments/wraps the read address
