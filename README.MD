@@ -3,7 +3,7 @@
 
 ### General I/O:
 
-<hr>
+---
 
 * A value sent to address 0x71 sets the memory mode and resets the read and write addresses to 0 if the new mode is not the same as the current mode
     * 0b00: Normal
@@ -19,7 +19,7 @@
 
 ### Mode specific I/O:
 
-<hr>
+---
 
 #### Normal mode:
 * A value read from address 0x70 returns the data at the current memory address if the metadata allows reading or a matching password is provided in the current metadata register
