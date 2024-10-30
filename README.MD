@@ -15,7 +15,7 @@
     * Bit __14__ sets the __address availability__ where ```0 = available``` and ```1 = unavailable```
     * Bit __15__ sets the __read permissions__ where ```0 = unreadable``` and ```1 = readable```
     * Bit __16__ sets the __write permissions__ where ```0 = unwritable``` and ```1 = writable```
-* A value sent to address ```0x74``` sets the __effective size__ of the memory in 16-bit words out of a maximum of __2^16__ or __65,536__ words
+* A value sent to address ```0x74``` sets the __effective size__ of the memory peripheral in 16-bit words out of a maximum of __2^16__ or __65,536__ words
 
 ### Mode specific I/O:
 
