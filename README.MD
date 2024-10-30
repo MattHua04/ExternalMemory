@@ -2,7 +2,7 @@
 <h3 align="center">SCOMP External Memory Peripheral API</h3>
 
 ### General I/O:
-* A value sent to address 0x71 sets the memory mode and resets the read and write addresses to 0
+* A value sent to address 0x71 sets the memory mode and resets the read and write addresses to 0 if the new mode is not the same as the current mode
     * 0b00: Normal
     * 0b01: Stack
     * 0b10: Queue
