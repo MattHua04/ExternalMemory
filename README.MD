@@ -28,7 +28,7 @@
 
 #### Stack mode:
 * A value read from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
-    * Data at read address is marked available
+    * Data at the read address is marked available
     * __If the stack is not empty__:
         * Decrements both the read and write addresses
 * A value sent to address ```0x70``` is written to memory at the write address __(always writes)__
