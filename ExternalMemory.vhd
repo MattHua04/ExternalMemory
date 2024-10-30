@@ -80,6 +80,15 @@ architecture a of ExternalMemory is
     signal mem_out_data_b         : std_logic_vector(31 downto 0);
 
 begin
+    -- Debug
+    dbg_mem_out_data <= mem_out_data_b;
+    dbg_mem_out_data_permitted <= mem_out_data_permitted;
+    dbg_mem_addr <= mem_addr_a;
+    dbg_write_addr <= std_logic_vector(to_unsigned(write_addr, 16));
+    dbg_read_addr <= std_logic_vector(to_unsigned(read_addr, 16));
+    dbg_size <= std_logic_vector(to_unsigned(effective_size, 32));
+    dbg_cs <= cs;
+
     -- Dual port altsyncram component
     altsyncram_component: altsyncram
         generic map (
@@ -136,15 +145,6 @@ begin
             end if;
         end if;
     end process;
-    
-    -- Debug
-    dbg_mem_out_data <= mem_out_data_b;
-    dbg_mem_out_data_permitted <= mem_out_data_permitted;
-    dbg_mem_addr <= mem_addr_a;
-    dbg_write_addr <= std_logic_vector(to_unsigned(write_addr, 16));
-    dbg_read_addr <= std_logic_vector(to_unsigned(read_addr, 16));
-    dbg_size <= std_logic_vector(to_unsigned(effective_size, 32));
-    dbg_cs <= cs;
 
     -- Main memory control process
     process (clock, resetn)
