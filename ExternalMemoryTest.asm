@@ -1,4 +1,6 @@
 ; ExternalMemoryTest.asm
+;
+; A brief demonstration of the functionality of each mode of the external memory peripheral
 
 ORG 0
 
