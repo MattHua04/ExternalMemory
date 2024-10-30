@@ -24,7 +24,7 @@
 #### Normal mode:
 * A value read from address ```0x70``` returns the data at the current memory address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
 * A value sent to address ```0x70``` is written to memory at the current memory address __(only if the metadata allows writing or a matching password is provided in the current metadata register)__
-* A value sent to address ```0x72``` sets the __memory address__
+* A value sent to address ```0x72``` sets the __memory address__ for subsequent memory operations
 
 #### Stack mode:
 * A value read from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
