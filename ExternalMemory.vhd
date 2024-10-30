@@ -151,6 +151,7 @@ begin
     begin
         if resetn = '0' then
             mem_mode <= "00";  -- Reset to normal mode
+            effective_size <= 65536;  -- Reset effective size
             mem_meta <= (others => '0');  -- Reset metadata
             write_enable <= '0';  -- Disable writing
             read_addr <= 0;  -- Reset read address
