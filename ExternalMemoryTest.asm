@@ -26,6 +26,8 @@ NormalTest:
     ; Set memory mode to normal
     LOAD Normal
     OUT ExtMemMode
+
+    CALL WaitToContinue
 ; ==========================
 ; Write data to addr 0
 ; ==========================
