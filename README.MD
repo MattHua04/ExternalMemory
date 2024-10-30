@@ -38,18 +38,18 @@
 #### Queue mode:
 * A value read from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
     * Data at the read address is marked available
-    * __If read address is behind write address__:
-        * Increments/wraps read address
+    * __If the read address is behind the write address__:
+        * Increments/wraps the read address
 * A value sent to address ```0x70``` is written to memory at the write address __(always writes)__
     * __If the queue is not full__:
-        * Increments/wraps write address
+        * Increments/wraps the write address
 
 #### Circular buffer mode:
 * A value read from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
     * Data at the read address is marked available
-    * __If read address is behind write address__:
-        * Increments/wraps read address
+    * __If the read address is behind the write address__:
+        * Increments/wraps the read address
 * A value sent to address ```0x70``` is written to memory at the write address __(always writes)__
-    * Increments/wraps write address
+    * Increments/wraps the write address
     * __If the circular buffer is full__:
-        * Increments/wraps read address
+        * Increments/wraps the read address
