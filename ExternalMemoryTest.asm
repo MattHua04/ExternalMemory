@@ -16,8 +16,7 @@ Start:
 NormalTest:
 ; Init
 ; ==========================
-    LOADI 0 ; Clear AC
-    OUT Hex0
+    CALL Clear
 
     ; Set memory size
     LOAD MemSize
@@ -44,8 +43,8 @@ NormalTest:
 
     ; Write some data to external memory
     LOADI &H12
-    OUT Hex0
     OUT ExtMem
+    OUT Hex0
     CALL WaitToContinue
 ; ==========================
 
@@ -64,8 +63,8 @@ NormalTest:
 
     ; Write some data to external memory
     LOADI &H34
-    OUT Hex0
     OUT ExtMem
+    OUT Hex0
     CALL WaitToContinue
 ; ; ==========================
 
@@ -84,8 +83,8 @@ NormalTest:
 
     ; Write some data to external memory
     LOADI &H56
-    OUT Hex0
     OUT ExtMem
+    OUT Hex0
     CALL WaitToContinue
 ; ==========================
 
@@ -120,8 +119,8 @@ NormalTest:
 
     ; Write some data to external memory without password
     LOADI &H78
-    OUT Hex0
     OUT ExtMem
+    OUT Hex0
     CALL WaitToContinue
 
     ; Read the data back from address 22 to verify it was not written
@@ -141,8 +140,8 @@ NormalTest:
 
     ; Write some data to external memory with password (access granted)
     LOADI &H78
-    OUT Hex0
     OUT ExtMem
+    OUT Hex0
     CALL WaitToContinue
 
     ; Read the data back from address 22 to verify it was written
@@ -155,8 +154,7 @@ NormalTest:
 StackTest:
 ; Init
 ; ==========================
-    LOADI 0 ; Clear AC
-    OUT Hex0
+    CALL Clear
 
     ; Set memory size
     LOAD MemSize
@@ -190,8 +188,7 @@ StackTest:
     OUT Hex0
     CALL WaitToContinue
 
-	LOADI 0 ; Clear AC
-    OUT Hex0
+	CALL Clear
     CALL WaitToContinue
 ; ==========================
 
@@ -212,8 +209,7 @@ StackTest:
 QueueTest:
 ; Init
 ; ==========================
-    LOADI 0 ; Clear AC
-    OUT Hex0
+    CALL Clear
     
     ; Set memory size
     LOAD MemSize
@@ -247,8 +243,7 @@ QueueTest:
     OUT Hex0
     CALL WaitToContinue
     
-	LOADI 0 ; Clear AC
-    OUT Hex0
+	CALL Clear
     CALL WaitToContinue
 ; ==========================
 
@@ -270,8 +265,7 @@ QueueTest:
 CircularTest:
 ; Init
 ; ==========================
-    LOADI 0 ; Clear AC
-    OUT Hex0
+    CALL Clear
     
     ; Set memory size
     LOAD MemSize
@@ -305,8 +299,7 @@ CircularTest:
     OUT Hex0
     CALL WaitToContinue
     
-	LOADI 0 ; Clear AC
-    OUT Hex0
+	CALL Clear
     CALL WaitToContinue
 ; ==========================
 
@@ -358,6 +351,12 @@ Sleep:
         IN Timer
         ADDI -1
         JNEG WaitingLoop
+    RETURN
+
+; Clear AC and Hex0
+Clear:
+    LOADI 0
+    OUT Hex0
     RETURN
 
 ; Variables
