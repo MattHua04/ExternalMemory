@@ -167,6 +167,8 @@ StackTest:
     ; Set metadata to unavailable, read, write
     LOADI &B111
     OUT ExtMemMeta
+
+    CALL WaitToContinue
 ; ==========================
 
 ; Write 1, 2, 3 to external memory
@@ -222,6 +224,8 @@ QueueTest:
     ; Set metadata to unavailable, read, write
     LOADI &B111
     OUT ExtMemMeta
+
+    CALL WaitToContinue
 ; ==========================
 
 ; Write 1, 2, 3 to external memory
@@ -278,6 +282,8 @@ CircularTest:
     ; Set metadata to unavailable, read, write
     LOADI &B111
     OUT ExtMemMeta
+
+    CALL WaitToContinue
 ; ==========================
 
 ; Write 1, 2, 3 to external memory
