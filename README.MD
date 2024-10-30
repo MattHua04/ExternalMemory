@@ -2,6 +2,9 @@
 <h3 align="center">SCOMP External Memory Peripheral API</h3>
 
 ### General I/O:
+
+<hr>
+
 * A value sent to address 0x71 sets the memory mode and resets the read and write addresses to 0 if the new mode is not the same as the current mode
     * 0b00: Normal
     * 0b01: Stack
@@ -15,6 +18,8 @@
 * A value sent to address 0x74 sets the effective size of the memory in 16-bit words out of a maximum of 2^16 or 65,536 words
 
 ### Mode specific I/O:
+
+<hr>
 
 #### Normal mode:
 * A value read from address 0x70 returns the data at the current memory address if the metadata allows reading or a matching password is provided in the current metadata register
