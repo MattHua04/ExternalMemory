@@ -20,7 +20,7 @@ NormalTest:
     OUT Hex0
 
     ; Set memory size
-    LOADI 100
+    LOAD MemSize
     OUT ExtMemResize
 
     ; Set memory mode to normal
@@ -159,7 +159,7 @@ StackTest:
     OUT Hex0
 
     ; Set memory size
-    LOADI 100
+    LOAD MemSize
     OUT ExtMemResize
 
     ; Set memory mode to stack
@@ -216,7 +216,7 @@ QueueTest:
     OUT Hex0
     
     ; Set memory size
-    LOADI 100
+    LOAD MemSize
     OUT ExtMemResize
 
     ; Set memory mode to queue
@@ -274,7 +274,7 @@ CircularTest:
     OUT Hex0
     
     ; Set memory size
-    LOADI 100
+    LOAD MemSize
     OUT ExtMemResize
 
     ; Set memory mode to queue
@@ -362,6 +362,7 @@ Sleep:
 
 ; Variables
 One: DW 1
+MemSize: DW 100
 Normal: DW &B00
 Stack: DW &B01
 Queue: DW &B10
