@@ -17,18 +17,32 @@ Start:
     OUT ExtMemMode
     LOADI &B111
     OUT ExtMemMeta
-    
+
     CALL WaitToContinue
 
+; Record switch inputs, stop when left switch goes up
 Record:
+    ; Record switch inputs
     IN Switches
+    OUT ExtMem
     OUT LEDs
+
+    ; Check for break condition
     SHIFT -9
     AND One
-    JPOS Record
+    JZERO Record
 
+; Playback recorded data, stop when left switch goes down
 Playback:
+    ; Display stored data
     IN ExtMem
+    OUT LEDs
+
+    ; Check for break condition
+    IN Switches
+    SHIFT -9
+    AND One
+    JPOS Playback
 
 End:
     ; Display FFFF to represent end
