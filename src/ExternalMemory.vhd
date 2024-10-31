@@ -59,6 +59,7 @@ architecture a of ExternalMemory is
     signal read_addr : integer := 0;  -- Read address for stack/queue/circular modes
     signal write_addr : integer := 0;  -- Write address for stack/queue/circular modes
     signal mem_out_data_permitted : std_logic_vector(31 downto 0);  -- Permission filtered output data
+    signal full : std_logic := '0';  -- Helper signal for queue and circular modes
 
     -- Altsyncram signals
     -- Port A: mainly handles write/pop operations, used to read in normal mode
@@ -141,6 +142,7 @@ begin
             write_addr <= 0;  -- Reset write address
             mem_addr_a <= (others => '0');
             mem_addr_b <= (others => '0');
+            full <= '0';  -- Reset full flag
         
         elsif (rising_edge(clock)) then
             -- Setting memory device mode, address, and metadata based on IO address
@@ -151,6 +153,7 @@ begin
                     write_addr <= 0;  -- Reset write address on mode change
                     mem_addr_a <= (others => '0');
                     mem_addr_b <= (others => '0');
+                    full <= '0';  -- Reset full flag on mode change
                 end if;
             -- Only set address in normal mode
             elsif (addr_en = '1' and mem_mode = "00") then
@@ -198,14 +201,15 @@ begin
                         mem_addr_a <= std_logic_vector(to_unsigned(write_addr, 16));  -- Set memory address tp write to
                         mem_addr_b <= std_logic_vector(to_unsigned(read_addr, 16));  -- Watch read address for future popping
                         -- Cap write address if full, don't write when full
-                        if (write_addr + 1 /= read_addr and write_addr < (effective_size - 1)) then
+                        if (write_addr /= read_addr and write_addr < (effective_size - 1)) then
                             write_addr <= write_addr + 1;  -- Increment write address
                             write_enable <= '1';
                         -- Wrap write address
-                        elsif (write_addr = (effective_size - 1) and read_addr /= 0) then
+                        elsif (write_addr /= read_addr and write_addr = (effective_size - 1)) then
                             write_addr <= 0;
                             write_enable <= '1';
                         else
+                            full <= '1';  -- Set full flag
                             write_enable <= '0';
                         end if;
 
@@ -214,7 +218,8 @@ begin
                         mem_in_data_a(15 downto 0) <= io_data;  -- Load data
                         mem_addr_a <= std_logic_vector(to_unsigned(write_addr, 16));  -- Set memory address to write to
 
-                        if (write_addr + 1 = read_addr or (write_addr = (effective_size - 1) and read_addr = 0)) then
+                        if write_addr = read_addr then
+                            full <= '1';  -- Set full flag
                             read_addr <= read_addr + 1;  -- Increment read address if full
                             mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
                         else
@@ -265,13 +270,16 @@ begin
                         write_enable <= '1';
 
                         -- Update read address
-                        if read_addr = (effective_size - 1) then
-                            -- Wrap read address
-                            read_addr <= 0;
-                            mem_addr_b <= std_logic_vector(to_unsigned(0, 16));  -- Watch read address for future popping
-                        elsif read_addr < write_addr then
-                            read_addr <= read_addr + 1;  -- Increment read address
-                            mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
+                        if full or read_addr /= write_addr then
+                            full <= '0';  -- Reset full flag
+                            if read_addr = (effective_size - 1) then
+                                -- Wrap read address
+                                read_addr <= 0;
+                                mem_addr_b <= std_logic_vector(to_unsigned(0, 16));  -- Watch read address for future popping
+                            elsif read_addr < write_addr then
+                                read_addr <= read_addr + 1;  -- Increment read address
+                                mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
+                            end if;
                         end if;
 
                     when "11" =>  -- Circular mode
@@ -281,12 +289,15 @@ begin
                         write_enable <= '1';
 
                         -- Update read address
-                        if read_addr = (effective_size - 1) then
-                            read_addr <= 0;  -- Wrap read address
-                            mem_addr_b <= std_logic_vector(to_unsigned(0, 16));  -- Watch read address for future popping
-                        elsif read_addr < write_addr then
-                            read_addr <= read_addr + 1;  -- Increment read address
-                            mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
+                        if full or read_addr /= write_addr then
+                            full <= '0';  -- Reset full flag
+                            if read_addr = (effective_size - 1) then
+                                read_addr <= 0;  -- Wrap read address
+                                mem_addr_b <= std_logic_vector(to_unsigned(0, 16));  -- Watch read address for future popping
+                            elsif read_addr < write_addr then
+                                read_addr <= read_addr + 1;  -- Increment read address
+                                mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
+                            end if;
                         end if;
 
                     when others =>  -- Default case
