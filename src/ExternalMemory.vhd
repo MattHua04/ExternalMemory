@@ -1,5 +1,4 @@
 -- ExternalMemory.vhd
--- 2024.10.22
 --
 -- This peripheral provides up to 2^16 or 65,536 16-bit words of external memory for SCOMP.
 -- The memory can be configured to operate in four different modes: normal, stack, queue, and circular buffer.
