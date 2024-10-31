@@ -201,11 +201,11 @@ begin
                         mem_addr_a <= std_logic_vector(to_unsigned(write_addr, 16));  -- Set memory address tp write to
                         mem_addr_b <= std_logic_vector(to_unsigned(read_addr, 16));  -- Watch read address for future popping
                         -- Cap write address if full, don't write when full
-                        if (write_addr /= read_addr and write_addr < (effective_size - 1)) then
+                        if (write_addr /= read_addr or full = '0') and write_addr < (effective_size - 1) then
                             write_addr <= write_addr + 1;  -- Increment write address
                             write_enable <= '1';
                         -- Wrap write address
-                        elsif (write_addr /= read_addr and write_addr = (effective_size - 1)) then
+                        elsif (write_addr /= read_addr or full = '0') and write_addr = (effective_size - 1) then
                             write_addr <= 0;
                             write_enable <= '1';
                         else
@@ -218,7 +218,7 @@ begin
                         mem_in_data_a(15 downto 0) <= io_data;  -- Load data
                         mem_addr_a <= std_logic_vector(to_unsigned(write_addr, 16));  -- Set memory address to write to
 
-                        if write_addr = read_addr then
+                        if write_addr = read_addr and full = '1' then
                             full <= '1';  -- Set full flag
                             read_addr <= read_addr + 1;  -- Increment read address if full
                             mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
@@ -270,7 +270,7 @@ begin
                         write_enable <= '1';
 
                         -- Update read address
-                        if full or read_addr /= write_addr then
+                        if full = '1' or read_addr /= write_addr then
                             full <= '0';  -- Reset full flag
                             if read_addr = (effective_size - 1) then
                                 -- Wrap read address
@@ -289,7 +289,7 @@ begin
                         write_enable <= '1';
 
                         -- Update read address
-                        if full or read_addr /= write_addr then
+                        if full = '1' or read_addr /= write_addr then
                             full <= '0';  -- Reset full flag
                             if read_addr = (effective_size - 1) then
                                 read_addr <= 0;  -- Wrap read address
