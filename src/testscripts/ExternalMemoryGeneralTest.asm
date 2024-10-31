@@ -19,7 +19,9 @@ NormalTest:
     CALL Clear
 
     ; Set memory size
-    CALL GetSwitches
+    CALL WaitToContinue
+    IN Switches
+    OUT Hex0
     OUT ExtMemResize
 
     ; Set memory mode to normal
@@ -161,7 +163,9 @@ StackTest:
     CALL Clear
 
     ; Set memory size
-    CALL GetSwitches
+    CALL WaitToContinue
+    IN Switches
+    OUT Hex0
     OUT ExtMemResize
 
     ; Set memory mode to stack
@@ -216,7 +220,9 @@ QueueTest:
     CALL Clear
     
     ; Set memory size
-    CALL GetSwitches
+    CALL WaitToContinue
+    IN Switches
+    OUT Hex0
     OUT ExtMemResize
 
     ; Set memory mode to queue
@@ -272,7 +278,9 @@ CircularTest:
     CALL Clear
     
     ; Set memory size
-    CALL GetSwitches
+    CALL WaitToContinue
+    IN Switches
+    OUT Hex0
     OUT ExtMemResize
 
     ; Set memory mode to queue
@@ -329,28 +337,6 @@ End:
     CALL WaitToContinue
 
 JUMP Start
-
-; Get the states of right 9 switches
-GetSwitches:
-    ; Wait for left switch up
-    GSUp:
-        CALL Sleep
-        IN Switches
-        OUT LEDs
-        SHIFT -9
-        AND One
-        JZERO Up
-    ; Wait for left switch down
-    GSDown:
-        CALL Sleep
-        IN Switches
-        OUT LEDs
-        SHIFT -9
-        AND One
-        JPOS Down
-    ; Return the state of the switches
-    IN Switches
-    RETURN
 
 ; Wait for switch to be toggled
 WaitToContinue:
