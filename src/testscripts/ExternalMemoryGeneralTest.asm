@@ -79,10 +79,10 @@ NormalTest:
     ADDI &B110
     OUT ExtMemMeta
 
-    ; Set address to 1000
-    LOADI &H3
+    ; Set address to 500
+    LOADI &H1
     SHIFT 8
-    ADDI &HE8
+    ADDI &HF4
     OUT ExtMemAddr
 
     ; Write some data to external memory
@@ -117,10 +117,10 @@ NormalTest:
 ; ==========================
 ; Write data to addr 1000 without password (access denied)
 ; ==========================
-    ; Set address to 1000
- 	LOADI &H3
+    ; Set address to 500
+ 	LOADI &H1
     SHIFT 8
-    ADDI &HE8
+    ADDI &HF4
     OUT ExtMemAddr
 
     ; Write some data to external memory without password

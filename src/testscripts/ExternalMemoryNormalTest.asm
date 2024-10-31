@@ -70,7 +70,7 @@ NormalTest:
     CALL WaitToContinue
 ; ; ==========================
 
-; Write data to addr 1000
+; Write data to addr 500
 ; ==========================
     ; Set data password
     LOADI &HAB
@@ -79,10 +79,10 @@ NormalTest:
     ADDI &B110
     OUT ExtMemMeta
 
-    ; Set address to 1000
-    LOADI &H3
+    ; Set address to 500
+    LOADI &H1
     SHIFT 8
-    ADDI &HE8
+    ADDI &HF4
     OUT ExtMemAddr
 
     ; Write some data to external memory
@@ -115,12 +115,12 @@ NormalTest:
     OUT Hex0
     CALL WaitToContinue
 ; ==========================
-; Write data to addr 1000 without password (access denied)
+; Write data to addr 500 without password (access denied)
 ; ==========================
-    ; Set address to 1000
- 	LOADI &H3
+    ; Set address to 500
+ 	LOADI &H1
     SHIFT 8
-    ADDI &HE8
+    ADDI &HF4
     OUT ExtMemAddr
 
     ; Write some data to external memory without password
@@ -129,13 +129,13 @@ NormalTest:
     OUT Hex0
     CALL WaitToContinue
 
-    ; Read the data back from address 1000 to verify it was not written
+    ; Read the data back from address 500 to verify it was not written
     IN ExtMem
     OUT Hex0
     CALL WaitToContinue
 ; ==========================
 
-; Write data to addr 1000 with password (access granted)
+; Write data to addr 500 with password (access granted)
 ; ==========================
     ; Set data password
     LOADI &HAB
@@ -150,7 +150,7 @@ NormalTest:
     OUT Hex0
     CALL WaitToContinue
 
-    ; Read the data back from address 1000 to verify it was written
+    ; Read the data back from address 500 to verify it was written
     IN ExtMem
     OUT Hex0
     CALL WaitToContinue
