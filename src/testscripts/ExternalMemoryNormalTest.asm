@@ -167,7 +167,7 @@ JUMP Start
 ; Get the states of right 9 switches
 GetSwitches:
     ; Wait for left switch up
-    Up:
+    GSUp:
         CALL Sleep
         IN Switches
         OUT LEDs
@@ -175,7 +175,7 @@ GetSwitches:
         AND One
         JZERO Up
     ; Wait for left switch down
-    Down:
+    GSDown:
         CALL Sleep
         IN Switches
         OUT LEDs
@@ -216,10 +216,10 @@ Sleep:
 ; Sleep for 0.5 seconds
 SleepLong:
     OUT Timer
-    WaitingLoop:
+    WaitingLoopLong:
         IN Timer
         ADDI -5
-        JNEG WaitingLoop
+        JNEG WaitingLoopLong
     RETURN
 
 ; Clear AC and Hex0

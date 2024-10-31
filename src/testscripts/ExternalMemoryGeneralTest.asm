@@ -333,7 +333,7 @@ JUMP Start
 ; Get the states of right 9 switches
 GetSwitches:
     ; Wait for left switch up
-    Up:
+    GSUp:
         CALL Sleep
         IN Switches
         OUT LEDs
@@ -341,7 +341,7 @@ GetSwitches:
         AND One
         JZERO Up
     ; Wait for left switch down
-    Down:
+    GSDown:
         CALL Sleep
         IN Switches
         OUT LEDs
