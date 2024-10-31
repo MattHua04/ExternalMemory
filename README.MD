@@ -22,12 +22,12 @@
 ---
 
 #### Normal mode:
-* A value read from address ```0x70``` returns the data at the current memory address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
+* Reading from address ```0x70``` returns the data at the current memory address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
 * A value sent to address ```0x70``` is written to memory at the current memory address __(only if the metadata allows writing or a matching password is provided in the current metadata register)__
 * A value sent to address ```0x72``` sets the __memory address__ for subsequent memory operations
 
 #### Stack mode:
-* A value read from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
+* Reading from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
     * Data at the read address is marked available
     * __If the stack is not empty__:
         * Decrements both the read and write addresses
@@ -36,7 +36,7 @@
         * Increments both the read and write addresses
 
 #### Queue mode:
-* A value read from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
+* Reading from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
     * Data at the read address is marked available
     * __If the read address is behind the write address__:
         * Increments/wraps the read address
@@ -45,7 +45,7 @@
         * Increments/wraps the write address
 
 #### Circular buffer mode:
-* A value read from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
+* Reading from address ```0x70``` returns the data at the read address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
     * Data at the read address is marked available
     * __If the read address is behind the write address__:
         * Increments/wraps the read address
