@@ -1,4 +1,6 @@
 src/db/
 src/incremental_db/
 src/output_files/
+src/output_files/
+!src/output_files/*.sof
 src/simulation/
