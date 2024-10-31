@@ -11,6 +11,7 @@
     * ```0b10```: Queue
     * ```0b11```: Circular buffer
 * A value sent to address ```0x73``` sets the __metadata__ to use in later memory operations
+    * Bit ordering from left to right 0-16
     * Bits __0-13__ set the __access password__ for restricted data __(cleared after every read or write operation for security)__
     * Bit __14__ sets the __address availability__ where ```0 = available``` and ```1 = unavailable```
     * Bit __15__ sets the __read permissions__ where ```0 = unreadable``` and ```1 = readable```
