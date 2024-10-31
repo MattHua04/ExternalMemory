@@ -5,135 +5,122 @@ ADDRESS_RADIX=HEX;
 DATA_RADIX=HEX;
 
 CONTENT BEGIN
-0000: B8AA; --     LOADI &amp;HAA
+0000: B8AA; --     LOADI &HAA
 0001: 6008; --     SHIFT 8
-0002: 68AA; --     ADDI &amp;HAA
+0002: 68AA; --     ADDI &HAA
 0003: 9804; --     OUT Hex0
-0004: 8062; --     CALL WaitToContinue
-0005: 8079; --     CALL Clear
-0006: 8054; --     CALL GetSwitches
-0007: 9874; --     OUT ExtMemResize
-0008: 087D; --     LOAD Normal
-0009: 9871; --     OUT ExtMemMode
-000A: 8062; --     CALL WaitToContinue
-000B: B8AB; --     LOADI &amp;HAB
-000C: 6003; --     SHIFT 3
-000D: 6805; --     ADDI &amp;B101
-000E: 9873; --     OUT ExtMemMeta
-000F: B800; --     LOADI 0
-0010: 9872; --     OUT ExtMemAddr
-0011: B80A; --     LOADI &amp;HA
-0012: 9870; --     OUT ExtMem
-0013: 9804; --     OUT Hex0
-0014: 8062; --     CALL WaitToContinue
-0015: B8AB; --     LOADI &amp;HAB
-0016: 6003; --     SHIFT 3
-0017: 6805; --     ADDI &amp;B101
-0018: 9873; --     OUT ExtMemMeta
-0019: B80A; --     LOADI 10
-001A: 9872; --     OUT ExtMemAddr
-001B: B80B; --     LOADI &amp;HB
-001C: 9870; --     OUT ExtMem
-001D: 9804; --     OUT Hex0
-001E: 8062; --     CALL WaitToContinue
-001F: B8AB; --     LOADI &amp;HAB
-0020: 6003; --     SHIFT 3
-0021: 6806; --     ADDI &amp;B110
-0022: 9873; --     OUT ExtMemMeta
-0023: B803; --     LOADI &amp;H3
-0024: 6008; --     SHIFT 8
-0025: 68E8; --     ADDI &amp;HE8
-0026: 9872; --     OUT ExtMemAddr
-0027: B80C; --     LOADI &amp;HC
-0028: 9870; --     OUT ExtMem
-0029: 9804; --     OUT Hex0
-002A: 8062; --     CALL WaitToContinue
-002B: B800; --     LOADI 0
-002C: 9872; --     OUT ExtMemAddr
-002D: 9070; --     IN ExtMem
-002E: 9804; --     OUT Hex0
-002F: 8062; --     CALL WaitToContinue
-0030: B8AB; --     LOADI &amp;HAB
-0031: 6003; --     SHIFT 3
-0032: 9873; --     OUT ExtMemMeta
-0033: B80A; --     LOADI 10
-0034: 9872; --     OUT ExtMemAddr
-0035: 9070; --     IN ExtMem
-0036: 9804; --     OUT Hex0
-0037: 8062; --     CALL WaitToContinue
-0038: B803; --  	LOADI &amp;H3
-0039: 6008; --     SHIFT 8
-003A: 68E8; --     ADDI &amp;HE8
-003B: 9872; --     OUT ExtMemAddr
-003C: B80D; --     LOADI &amp;HD
-003D: 9870; --     OUT ExtMem
-003E: 9804; --     OUT Hex0
-003F: 8062; --     CALL WaitToContinue
-0040: 9070; --     IN ExtMem
-0041: 9804; --     OUT Hex0
-0042: 8062; --     CALL WaitToContinue
-0043: B8AB; --     LOADI &amp;HAB
-0044: 6003; --     SHIFT 3
-0045: 6807; --     ADDI &amp;B111
-0046: 9873; --     OUT ExtMemMeta
-0047: B80D; --     LOADI &amp;HD
-0048: 9870; --     OUT ExtMem
-0049: 9804; --     OUT Hex0
-004A: 8062; --     CALL WaitToContinue
-004B: 9070; --     IN ExtMem
-004C: 9804; --     OUT Hex0
-004D: 8062; --     CALL WaitToContinue
-004E: B8FF; --     LOADI &amp;HFF
-004F: 6008; --     SHIFT 8
-0050: 68FF; --     ADDI &amp;HFF
-0051: 9804; --     OUT Hex0
-0052: 8062; --     CALL WaitToContinue
-0053: 2800; -- JUMP Start
-0054: 806F; --         CALL Sleep
-0055: 9000; --         IN Switches
-0056: 9801; --         OUT LEDs
-0057: 6019; --         SHIFT -9
-0058: 487C; --         AND One
-0059: 4062; --         JZERO Up
-005A: 806F; --         CALL Sleep
-005B: 9000; --         IN Switches
-005C: 9801; --         OUT LEDs
-005D: 6019; --         SHIFT -9
-005E: 487C; --         AND One
-005F: 3868; --         JPOS Down
-0060: 9000; --     IN Switches
-0061: 8800; --     RETURN
-0062: 806F; --         CALL Sleep
-0063: 9000; --         IN Switches
-0064: 9801; --         OUT LEDs
-0065: 6019; --         SHIFT -9
-0066: 487C; --         AND One
-0067: 4062; --         JZERO Up
-0068: 806F; --         CALL Sleep
-0069: 9000; --         IN Switches
-006A: 9801; --         OUT LEDs
-006B: 6019; --         SHIFT -9
-006C: 487C; --         AND One
-006D: 3868; --         JPOS Down
-006E: 8800; --     RETURN
-006F: 9802; --     OUT Timer
-0070: 9002; --         IN Timer
-0071: 6FFF; --         ADDI -1
-0072: 3070; --         JNEG WaitingLoop
-0073: 8800; --     RETURN
-0074: 9802; --     OUT Timer
-0075: 9002; --         IN Timer
-0076: 6FFB; --         ADDI -5
-0077: 3075; --         JNEG WaitingLoopLong
-0078: 8800; --     RETURN
-0079: B800; --     LOADI 0
-007A: 9804; --     OUT Hex0
-007B: 8800; --     RETURN
-007C: 0001; -- One: DW 1
-007D: 0000; -- Normal: DW &amp;B00
-007E: 0001; -- Stack: DW &amp;B01
-007F: 0002; -- Queue: DW &amp;B10
-0080: 0003; -- Circular: DW &amp;B11
-[0081..07FF] : 0000; -- [empty memory]
+0004: 8056; --     CALL WaitToContinue
+0005: 806D; --     CALL Clear
+0006: 8056; --     CALL WaitToContinue
+0007: 9000; --     IN Switches
+0008: 9804; --     OUT Hex0
+0009: 9874; --     OUT ExtMemResize
+000A: 0871; --     LOAD Normal
+000B: 9871; --     OUT ExtMemMode
+000C: 8056; --     CALL WaitToContinue
+000D: B8AB; --     LOADI &HAB
+000E: 6003; --     SHIFT 3
+000F: 6805; --     ADDI &B101
+0010: 9873; --     OUT ExtMemMeta
+0011: B800; --     LOADI 0
+0012: 9872; --     OUT ExtMemAddr
+0013: B80A; --     LOADI &HA
+0014: 9870; --     OUT ExtMem
+0015: 9804; --     OUT Hex0
+0016: 8056; --     CALL WaitToContinue
+0017: B8AB; --     LOADI &HAB
+0018: 6003; --     SHIFT 3
+0019: 6805; --     ADDI &B101
+001A: 9873; --     OUT ExtMemMeta
+001B: B80A; --     LOADI 10
+001C: 9872; --     OUT ExtMemAddr
+001D: B80B; --     LOADI &HB
+001E: 9870; --     OUT ExtMem
+001F: 9804; --     OUT Hex0
+0020: 8056; --     CALL WaitToContinue
+0021: B8AB; --     LOADI &HAB
+0022: 6003; --     SHIFT 3
+0023: 6806; --     ADDI &B110
+0024: 9873; --     OUT ExtMemMeta
+0025: B801; --     LOADI &H1
+0026: 6008; --     SHIFT 8
+0027: 68F4; --     ADDI &HF4
+0028: 9872; --     OUT ExtMemAddr
+0029: B80C; --     LOADI &HC
+002A: 9870; --     OUT ExtMem
+002B: 9804; --     OUT Hex0
+002C: 8056; --     CALL WaitToContinue
+002D: B800; --     LOADI 0
+002E: 9872; --     OUT ExtMemAddr
+002F: 9070; --     IN ExtMem
+0030: 9804; --     OUT Hex0
+0031: 8056; --     CALL WaitToContinue
+0032: B8AB; --     LOADI &HAB
+0033: 6003; --     SHIFT 3
+0034: 9873; --     OUT ExtMemMeta
+0035: B80A; --     LOADI 10
+0036: 9872; --     OUT ExtMemAddr
+0037: 9070; --     IN ExtMem
+0038: 9804; --     OUT Hex0
+0039: 8056; --     CALL WaitToContinue
+003A: B801; --  	LOADI &H1
+003B: 6008; --     SHIFT 8
+003C: 68F4; --     ADDI &HF4
+003D: 9872; --     OUT ExtMemAddr
+003E: B80D; --     LOADI &HD
+003F: 9870; --     OUT ExtMem
+0040: 9804; --     OUT Hex0
+0041: 8056; --     CALL WaitToContinue
+0042: 9070; --     IN ExtMem
+0043: 9804; --     OUT Hex0
+0044: 8056; --     CALL WaitToContinue
+0045: B8AB; --     LOADI &HAB
+0046: 6003; --     SHIFT 3
+0047: 6807; --     ADDI &B111
+0048: 9873; --     OUT ExtMemMeta
+0049: B80D; --     LOADI &HD
+004A: 9870; --     OUT ExtMem
+004B: 9804; --     OUT Hex0
+004C: 8056; --     CALL WaitToContinue
+004D: 9070; --     IN ExtMem
+004E: 9804; --     OUT Hex0
+004F: 8056; --     CALL WaitToContinue
+0050: B8FF; --     LOADI &HFF
+0051: 6008; --     SHIFT 8
+0052: 68FF; --     ADDI &HFF
+0053: 9804; --     OUT Hex0
+0054: 8056; --     CALL WaitToContinue
+0055: 2800; -- JUMP Start
+0056: 8063; --         CALL Sleep
+0057: 9000; --         IN Switches
+0058: 9801; --         OUT LEDs
+0059: 6019; --         SHIFT -9
+005A: 4870; --         AND One
+005B: 4056; --         JZERO Up
+005C: 8063; --         CALL Sleep
+005D: 9000; --         IN Switches
+005E: 9801; --         OUT LEDs
+005F: 6019; --         SHIFT -9
+0060: 4870; --         AND One
+0061: 385C; --         JPOS Down
+0062: 8800; --     RETURN
+0063: 9802; --     OUT Timer
+0064: 9002; --         IN Timer
+0065: 6FFF; --         ADDI -1
+0066: 3064; --         JNEG WaitingLoop
+0067: 8800; --     RETURN
+0068: 9802; --     OUT Timer
+0069: 9002; --         IN Timer
+006A: 6FFB; --         ADDI -5
+006B: 3069; --         JNEG WaitingLoopLong
+006C: 8800; --     RETURN
+006D: B800; --     LOADI 0
+006E: 9804; --     OUT Hex0
+006F: 8800; --     RETURN
+0070: 0001; -- One: DW 1
+0071: 0000; -- Normal: DW &B00
+0072: 0001; -- Stack: DW &B01
+0073: 0002; -- Queue: DW &B10
+0074: 0003; -- Circular: DW &B11
+[0075..07FF] : 0000; -- [empty memory]
 END;
-

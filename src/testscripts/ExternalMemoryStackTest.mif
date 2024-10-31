@@ -5,92 +5,79 @@ ADDRESS_RADIX=HEX;
 DATA_RADIX=HEX;
 
 CONTENT BEGIN
-0000: B8AA; --     LOADI &amp;HAA
+0000: B8AA; --     LOADI &HAA
 0001: 6008; --     SHIFT 8
-0002: 68AA; --     ADDI &amp;HAA
+0002: 68AA; --     ADDI &HAA
 0003: 9804; --     OUT Hex0
-0004: 8035; --     CALL WaitToContinue
-0005: 804C; --     CALL Clear
-0006: 8027; --     CALL GetSwitches
-0007: 9874; --     OUT ExtMemResize
-0008: 0853; --     LOAD Stack
-0009: 9871; --     OUT ExtMemMode
-000A: B807; --     LOADI &amp;B111
-000B: 9873; --     OUT ExtMemMeta
-000C: 8035; --     CALL WaitToContinue
-000D: B800; --     LOADI 0
-000E: 1050; --     STORE Count
-000F: 0850; --         LOAD Count
-0010: 6801; --         ADDI 1
-0011: 1050; --         STORE Count
-0012: 9870; --         OUT ExtMem
-0013: 9804; --         OUT Hex0
-0014: 8047; --         CALL SleepLong
-0015: 2051; --         SUB TestLength
-0016: 300F; --         JNEG StackPush
-0017: B800; --     LOADI 0
-0018: 1050; --     STORE Count
-0019: 9070; --         IN ExtMem
-001A: 9804; --         OUT Hex0
-001B: 8047; --         CALL SleepLong
-001C: 0850; --         LOAD Count
-001D: 6801; --         ADDI 1
-001E: 1050; --         STORE Count
-001F: 2051; --         SUB TestLength
-0020: 3019; --         JNEG StackPop
-0021: B8FF; --     LOADI &amp;HFF
-0022: 6008; --     SHIFT 8
-0023: 68FF; --     ADDI &amp;HFF
-0024: 9804; --     OUT Hex0
-0025: 8035; --     CALL WaitToContinue
-0026: 2800; -- JUMP Start
-0027: 8042; --         CALL Sleep
-0028: 9000; --         IN Switches
-0029: 9801; --         OUT LEDs
-002A: 6019; --         SHIFT -9
-002B: 484F; --         AND One
-002C: 4035; --         JZERO Up
-002D: 8042; --         CALL Sleep
-002E: 9000; --         IN Switches
-002F: 9801; --         OUT LEDs
-0030: 6019; --         SHIFT -9
-0031: 484F; --         AND One
-0032: 383B; --         JPOS Down
-0033: 9000; --     IN Switches
-0034: 8800; --     RETURN
-0035: 8042; --         CALL Sleep
-0036: 9000; --         IN Switches
-0037: 9801; --         OUT LEDs
-0038: 6019; --         SHIFT -9
-0039: 484F; --         AND One
-003A: 4035; --         JZERO Up
-003B: 8042; --         CALL Sleep
-003C: 9000; --         IN Switches
-003D: 9801; --         OUT LEDs
-003E: 6019; --         SHIFT -9
-003F: 484F; --         AND One
-0040: 383B; --         JPOS Down
-0041: 8800; --     RETURN
-0042: 9802; --     OUT Timer
-0043: 9002; --         IN Timer
-0044: 6FFF; --         ADDI -1
-0045: 3043; --         JNEG WaitingLoop
-0046: 8800; --     RETURN
-0047: 9802; --     OUT Timer
-0048: 9002; --         IN Timer
-0049: 6FFB; --         ADDI -5
-004A: 3048; --         JNEG WaitingLoopLong
-004B: 8800; --     RETURN
-004C: B800; --     LOADI 0
-004D: 9804; --     OUT Hex0
-004E: 8800; --     RETURN
-004F: 0001; -- One: DW 1
-0050: 0000; -- Count: DW 0
-0051: 0032; -- TestLength: DW 50
-0052: 0000; -- Normal: DW &amp;B00
-0053: 0001; -- Stack: DW &amp;B01
-0054: 0002; -- Queue: DW &amp;B10
-0055: 0003; -- Circular: DW &amp;B11
-[0056..07FF] : 0000; -- [empty memory]
+0004: 8029; --     CALL WaitToContinue
+0005: 8040; --     CALL Clear
+0006: 8029; --     CALL WaitToContinue
+0007: 9000; --     IN Switches
+0008: 9804; --     OUT Hex0
+0009: 9874; --     OUT ExtMemResize
+000A: 0847; --     LOAD Stack
+000B: 9871; --     OUT ExtMemMode
+000C: B807; --     LOADI &B111
+000D: 9873; --     OUT ExtMemMeta
+000E: 8029; --     CALL WaitToContinue
+000F: B800; --     LOADI 0
+0010: 1044; --     STORE Count
+0011: 0844; --         LOAD Count
+0012: 6801; --         ADDI 1
+0013: 1044; --         STORE Count
+0014: 9870; --         OUT ExtMem
+0015: 9804; --         OUT Hex0
+0016: 803B; --         CALL SleepLong
+0017: 2045; --         SUB TestLength
+0018: 3011; --         JNEG StackPush
+0019: B800; --     LOADI 0
+001A: 1044; --     STORE Count
+001B: 9070; --         IN ExtMem
+001C: 9804; --         OUT Hex0
+001D: 803B; --         CALL SleepLong
+001E: 0844; --         LOAD Count
+001F: 6801; --         ADDI 1
+0020: 1044; --         STORE Count
+0021: 2045; --         SUB TestLength
+0022: 301B; --         JNEG StackPop
+0023: B8FF; --     LOADI &HFF
+0024: 6008; --     SHIFT 8
+0025: 68FF; --     ADDI &HFF
+0026: 9804; --     OUT Hex0
+0027: 8029; --     CALL WaitToContinue
+0028: 2800; -- JUMP Start
+0029: 8036; --         CALL Sleep
+002A: 9000; --         IN Switches
+002B: 9801; --         OUT LEDs
+002C: 6019; --         SHIFT -9
+002D: 4843; --         AND One
+002E: 4029; --         JZERO Up
+002F: 8036; --         CALL Sleep
+0030: 9000; --         IN Switches
+0031: 9801; --         OUT LEDs
+0032: 6019; --         SHIFT -9
+0033: 4843; --         AND One
+0034: 382F; --         JPOS Down
+0035: 8800; --     RETURN
+0036: 9802; --     OUT Timer
+0037: 9002; --         IN Timer
+0038: 6FFF; --         ADDI -1
+0039: 3037; --         JNEG WaitingLoop
+003A: 8800; --     RETURN
+003B: 9802; --     OUT Timer
+003C: 9002; --         IN Timer
+003D: 6FFB; --         ADDI -5
+003E: 303C; --         JNEG WaitingLoopLong
+003F: 8800; --     RETURN
+0040: B800; --     LOADI 0
+0041: 9804; --     OUT Hex0
+0042: 8800; --     RETURN
+0043: 0001; -- One: DW 1
+0044: 0000; -- Count: DW 0
+0045: 0032; -- TestLength: DW 50
+0046: 0000; -- Normal: DW &B00
+0047: 0001; -- Stack: DW &B01
+0048: 0002; -- Queue: DW &B10
+0049: 0003; -- Circular: DW &B11
+[004A..07FF] : 0000; -- [empty memory]
 END;
-
