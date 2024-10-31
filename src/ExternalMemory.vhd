@@ -147,13 +147,11 @@ begin
             -- Setting memory device mode, address, and metadata based on IO address
             if (mode_en = '1') then
                 mem_mode <= io_data(1 downto 0);  -- Set mode
-                if (mem_mode /= io_data(1 downto 0)) then
-                    read_addr <= 0;  -- Reset read address on mode change
-                    write_addr <= 0;  -- Reset write address on mode change
-                    mem_addr_a <= (others => '0');
-                    mem_addr_b <= (others => '0');
-                    full <= '0';  -- Reset full flag on mode change
-                end if;
+                read_addr <= 0;  -- Reset read address on mode change
+                write_addr <= 0;  -- Reset write address on mode change
+                mem_addr_a <= (others => '0');
+                mem_addr_b <= (others => '0');
+                full <= '0';  -- Reset full flag on mode change
             -- Only set address in normal mode
             elsif (addr_en = '1' and mem_mode = "00") then
                 mem_addr_a <= io_data;

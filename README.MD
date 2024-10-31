@@ -5,7 +5,7 @@
 
 ---
 
-* A value sent to address ```0x71``` sets the __memory mode__ and __resets the read and write addresses to 0__ (if the passed in mode is not the same as the current mode)
+* A value sent to address ```0x71``` sets the __memory mode__ and __resets the read and write addresses to 0__
     * ```0b00```: Normal
     * ```0b01```: Stack
     * ```0b10```: Queue
