@@ -39,7 +39,7 @@ CircularTest:
 ; ==========================
     LOADI 0
     STORE Count
-    StackPush:
+    DataPush:
         LOAD Count
         ADDI 1
         STORE Count
@@ -48,24 +48,27 @@ CircularTest:
         OUT Hex0
         CALL SleepLong
 
+        LOAD Count
         SUB TestLength
-        JNEG StackPush
+        JNEG DataPush
 ; ==========================
 
 ; Read the data back from the stack
 ; ==========================
     LOADI 0
     STORE Count
-    StackPop:
+    DataPop:
+        LOAD Count
+        ADDI 1
+        STORE Count
+
         IN ExtMem
         OUT Hex0
         CALL SleepLong
 
         LOAD Count
-        ADDI 1
-        STORE Count
         SUB TestLength
-        JNEG StackPop
+        JNEG DataPop
 ; ==========================
 
 End:
