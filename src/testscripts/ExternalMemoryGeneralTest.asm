@@ -19,7 +19,7 @@ NormalTest:
     CALL Clear
 
     ; Set memory size
-    LOAD MemSize
+    CALL GetSwitches
     OUT ExtMemResize
 
     ; Set memory mode to normal
@@ -42,13 +42,13 @@ NormalTest:
     OUT ExtMemAddr
 
     ; Write some data to external memory
-    LOADI &H12
+    LOADI &HA
     OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
 ; ==========================
 
-; Write data to addr 11
+; Write data to addr 10
 ; ==========================
     ; Set data password
     LOADI &HAB
@@ -57,18 +57,18 @@ NormalTest:
     ADDI &B101
     OUT ExtMemMeta
 
-    ; Set address to 11
-    LOADI 11
+    ; Set address to 10
+    LOADI 10
     OUT ExtMemAddr
 
     ; Write some data to external memory
-    LOADI &H34
+    LOADI &HB
     OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
 ; ; ==========================
 
-; Write data to addr 22
+; Write data to addr 1000
 ; ==========================
     ; Set data password
     LOADI &HAB
@@ -77,12 +77,14 @@ NormalTest:
     ADDI &B110
     OUT ExtMemMeta
 
-    ; Set address to 22
-    LOADI 22
+    ; Set address to 1000
+    LOADI &H3
+    SHIFT 8
+    ADDI &HE8
     OUT ExtMemAddr
 
     ; Write some data to external memory
-    LOADI &H56
+    LOADI &HC
     OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
@@ -97,39 +99,41 @@ NormalTest:
     CALL WaitToContinue
 ; ==========================
 
-; Read data from addr 11 with password (access granted)
+; Read data from addr 10 with password (access granted)
 ; ==========================
     ; Set data password
     LOADI &HAB
     SHIFT 3
     OUT ExtMemMeta
 
-    ; Read from address 11
-    LOADI 11
+    ; Read from address 10
+    LOADI 10
     OUT ExtMemAddr
     IN ExtMem
     OUT Hex0
     CALL WaitToContinue
 ; ==========================
-; Write data to addr 22 without password (access denied)
+; Write data to addr 1000 without password (access denied)
 ; ==========================
-    ; Set address to 22
- 	LOADI 22
+    ; Set address to 1000
+ 	LOADI &H3
+    SHIFT 8
+    ADDI &HE8
     OUT ExtMemAddr
 
     ; Write some data to external memory without password
-    LOADI &H78
+    LOADI &HD
     OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
 
-    ; Read the data back from address 22 to verify it was not written
+    ; Read the data back from address 1000 to verify it was not written
     IN ExtMem
     OUT Hex0
     CALL WaitToContinue
 ; ==========================
 
-; Write data to addr 22 with password (access granted)
+; Write data to addr 1000 with password (access granted)
 ; ==========================
     ; Set data password
     LOADI &HAB
@@ -139,12 +143,12 @@ NormalTest:
     OUT ExtMemMeta
 
     ; Write some data to external memory with password (access granted)
-    LOADI &H78
+    LOADI &HD
     OUT ExtMem
     OUT Hex0
     CALL WaitToContinue
 
-    ; Read the data back from address 22 to verify it was written
+    ; Read the data back from address 1000 to verify it was written
     IN ExtMem
     OUT Hex0
     CALL WaitToContinue
@@ -157,7 +161,7 @@ StackTest:
     CALL Clear
 
     ; Set memory size
-    LOAD MemSize
+    CALL GetSwitches
     OUT ExtMemResize
 
     ; Set memory mode to stack
@@ -212,7 +216,7 @@ QueueTest:
     CALL Clear
     
     ; Set memory size
-    LOAD MemSize
+    CALL GetSwitches
     OUT ExtMemResize
 
     ; Set memory mode to queue
@@ -268,7 +272,7 @@ CircularTest:
     CALL Clear
     
     ; Set memory size
-    LOAD MemSize
+    CALL GetSwitches
     OUT ExtMemResize
 
     ; Set memory mode to queue
@@ -326,6 +330,27 @@ End:
 
 JUMP Start
 
+; Get the states of right 9 switches
+GetSwitches:
+    ; Wait for left switch up
+    Up:
+        CALL Sleep
+        IN Switches
+        OUT LEDs
+        SHIFT -9
+        AND One
+        JZERO Up
+    ; Wait for left switch down
+    Down:
+        CALL Sleep
+        IN Switches
+        OUT LEDs
+        AND One
+        JPOS Down
+    ; Return the state of the switches
+    IN Switches
+    RETURN
+
 ; Wait for switch to be toggled
 WaitToContinue:
     ; Wait for switch up
@@ -361,7 +386,6 @@ Clear:
 
 ; Variables
 One: DW 1
-MemSize: DW 100
 Normal: DW &B00
 Stack: DW &B01
 Queue: DW &B10
