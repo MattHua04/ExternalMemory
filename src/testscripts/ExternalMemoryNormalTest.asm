@@ -179,6 +179,7 @@ GetSwitches:
         CALL Sleep
         IN Switches
         OUT LEDs
+        SHIFT -9
         AND One
         JPOS Down
     ; Return the state of the switches
@@ -200,6 +201,7 @@ WaitToContinue:
         CALL Sleep
         IN Switches
         OUT LEDs
+        SHIFT -9
         AND One
         JPOS Down
     RETURN
