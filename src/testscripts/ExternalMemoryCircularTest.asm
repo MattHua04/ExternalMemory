@@ -1,4 +1,4 @@
-; ExternalMemoryTest.asm
+; ExternalMemoryCircularTest.asm
 ;
 ; A brief demonstration of the circular buffer memory mode of the external memory peripheral
 

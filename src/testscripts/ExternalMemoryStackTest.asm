@@ -1,4 +1,4 @@
-; ExternalMemoryTest.asm
+; ExternalMemoryStackTest.asm
 ;
 ; A brief demonstration of the stack memory mode of the external memory peripheral
 

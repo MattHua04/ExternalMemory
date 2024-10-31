@@ -1,4 +1,4 @@
-; ExternalMemoryTest.asm
+; ExternalMemoryNormalTest.asm
 ;
 ; A brief demonstration of the normal memory mode of the external memory peripheral
 

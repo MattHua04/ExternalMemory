@@ -1,4 +1,4 @@
-; ExternalMemoryTest.asm
+; ExternalMemoryQueueTest.asm
 ;
 ; A brief demonstration of the queue memory mode of the external memory peripheral
 
