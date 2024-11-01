@@ -5,13 +5,13 @@ ADDRESS_RADIX=HEX;
 DATA_RADIX=HEX;
 
 CONTENT BEGIN
-0000: B8AA; --     LOADI &amp;HAA
+0000: B8AA; --     LOADI &HAA
 0001: 6008; --     SHIFT 8
-0002: 68AA; --     ADDI &amp;HAA
+0002: 68AA; --     ADDI &HAA
 0003: 9804; --     OUT Hex0
 0004: 084F; --     LOAD Circular
 0005: 9871; --     OUT ExtMemMode
-0006: B807; --     LOADI &amp;B111
+0006: B807; --     LOADI &B111
 0007: 9873; --     OUT ExtMemMeta
 0008: 084B; --     LOAD MaxMemSize
 0009: 9874; --     OUT ExtMemResize
@@ -41,9 +41,9 @@ CONTENT BEGIN
 0021: 6019; --     SHIFT -9
 0022: 4847; --     AND One
 0023: 3819; --     JPOS Playback
-0024: B8FF; --     LOADI &amp;HFF
+0024: B8FF; --     LOADI &HFF
 0025: 6008; --     SHIFT 8
-0026: 68FF; --     ADDI &amp;HFF
+0026: 68FF; --     ADDI &HFF
 0027: 9804; --     OUT Hex0
 0028: 802A; --     CALL WaitToContinue
 0029: 2800; -- JUMP Start
@@ -80,11 +80,10 @@ CONTENT BEGIN
 0048: 0000; -- Count: DW 0
 0049: 3417; -- MaxCount: DW 13335
 004A: 0000; -- MemSize: DW 0
-004B: FFFF; -- MaxMemSize: DW &amp;HFFFF
-004C: 0000; -- Normal: DW &amp;B00
-004D: 0001; -- Stack: DW &amp;B01
-004E: 0002; -- Queue: DW &amp;B10
-004F: 0003; -- Circular: DW &amp;B11
+004B: FFFF; -- MaxMemSize: DW &HFFFF
+004C: 0000; -- Normal: DW &B00
+004D: 0001; -- Stack: DW &B01
+004E: 0002; -- Queue: DW &B10
+004F: 0003; -- Circular: DW &B11
 [0050..07FF] : 0000; -- [empty memory]
 END;
-
