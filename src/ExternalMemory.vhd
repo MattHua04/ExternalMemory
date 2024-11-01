@@ -230,8 +230,6 @@ begin
                         -- Set full flag if write address catches up to read address
                         if (write_addr + 1) mod effective_size = read_addr then
                             full <= '1';
-                        else
-                            full <= '0';
                         end if;
 
                         -- Always enable writing in circular mode
