@@ -118,7 +118,7 @@ begin
     begin
         if (rising_edge(clock)) then
             -- Check read permission in stack, queue, and circular modes, override if password matches metadata
-            if mem_mode /= "00" and (mem_out_data_b(18) = '0' or mem_out_data_b(17) = '1' or mem_meta(15 downto 3) = mem_out_data_b(31 downto 19)) then
+            if mem_mode /= "00" and not(full = '0' and read_addr = write_addr) and (mem_out_data_b(18) = '0' or mem_out_data_b(17) = '1' or mem_meta(15 downto 3) = mem_out_data_b(31 downto 19)) then
                 mem_out_data_permitted <= mem_out_data_b;
             -- Check for valid read address and read permission in normal mode, override if password matches metadata
             elsif mem_mode = "00" and (to_integer(unsigned(mem_addr_a)) < effective_size) and (mem_out_data_a(18) = '0' or mem_out_data_a(17) = '1' or mem_meta(15 downto 3) = mem_out_data_a(31 downto 19)) then
