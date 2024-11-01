@@ -22,6 +22,8 @@ Start:
 
 ; Record switch inputs, stop when left switch goes up
 Record:
+    CALL Sleep
+
     ; Record switch inputs
     IN Switches
     OUT ExtMem
@@ -34,6 +36,8 @@ Record:
 
 ; Playback recorded data, stop when left switch goes down
 Playback:
+    CALL Sleep
+    
     ; Display stored data
     IN ExtMem
     OUT LEDs
