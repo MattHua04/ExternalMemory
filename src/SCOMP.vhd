@@ -63,7 +63,6 @@ architecture a of SCOMP is
 	signal int_ack       : std_logic_vector( 3 downto 0); -- interrupt acknowledge
 	signal PC_saved      : std_logic_vector(10 downto 0); -- saced PC while inside ISR
 	signal AC_saved      : std_logic_vector(15 downto 0); -- saced AC while inside ISR
-	
 
 begin
 	-- use altsyncram component for unified program and data memory
