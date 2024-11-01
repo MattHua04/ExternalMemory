@@ -1,5 +1,5 @@
 <h1 align="center">GT ECE 2031 Final Project Fall 2024</h1>
-<h3 align="center">SCOMP External Memory Peripheral API</h3>
+<h3 align="center">SCOMP External Memory Peripheral Usage</h3>
 
 ### General I/O:
 
