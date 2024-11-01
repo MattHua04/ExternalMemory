@@ -9,57 +9,82 @@ CONTENT BEGIN
 0001: 6008; --     SHIFT 8
 0002: 68AA; --     ADDI &amp;HAA
 0003: 9804; --     OUT Hex0
-0004: 0836; --     LOAD Circular
+0004: 084F; --     LOAD Circular
 0005: 9871; --     OUT ExtMemMode
 0006: B807; --     LOADI &amp;B111
 0007: 9873; --     OUT ExtMemMeta
-0008: 801D; --     CALL WaitToContinue
-0009: 802A; --     CALL Sleep
-000A: 9000; --     IN Switches
-000B: 9870; --     OUT ExtMem
-000C: 9801; --     OUT LEDs
-000D: 6019; --     SHIFT -9
-000E: 4832; --     AND One
-000F: 4009; --     JZERO Record
-0010: 802A; --     CALL Sleep
-0011: 9070; --     IN ExtMem
-0012: 9801; --     OUT LEDs
-0013: 9000; --     IN Switches
+0008: 084B; --     LOAD MaxMemSize
+0009: 9874; --     OUT ExtMemResize
+000A: B800; --     LOADI 0
+000B: 104A; --     STORE MemSize
+000C: 802A; --     CALL WaitToContinue
+000D: 8037; --     CALL SleepShort
+000E: 084A; --     LOAD MemSize
+000F: 6801; --     ADDI 1
+0010: 104A; --     STORE MemSize
+0011: 9000; --     IN Switches
+0012: 9870; --     OUT ExtMem
+0013: 9801; --     OUT LEDs
 0014: 6019; --     SHIFT -9
-0015: 4832; --     AND One
-0016: 3810; --     JPOS Playback
-0017: B8FF; --     LOADI &amp;HFF
-0018: 6008; --     SHIFT 8
-0019: 68FF; --     ADDI &amp;HFF
-001A: 9804; --     OUT Hex0
-001B: 801D; --     CALL WaitToContinue
-001C: 2800; -- JUMP Start
-001D: 802A; --         CALL Sleep
-001E: 9000; --         IN Switches
-001F: 9801; --         OUT LEDs
-0020: 6019; --         SHIFT -9
-0021: 4832; --         AND One
-0022: 401D; --         JZERO Up
-0023: 802A; --         CALL Sleep
-0024: 9000; --         IN Switches
-0025: 9801; --         OUT LEDs
-0026: 6019; --         SHIFT -9
-0027: 4832; --         AND One
-0028: 3823; --         JPOS Down
-0029: 8800; --     RETURN
-002A: 9802; --     OUT Timer
-002B: 9002; --         IN Timer
-002C: 6FFF; --         ADDI -1
-002D: 302B; --         JNEG WaitingLoop
-002E: 8800; --     RETURN
-002F: B800; --     LOADI 0
-0030: 9804; --     OUT Hex0
-0031: 8800; --     RETURN
-0032: 0001; -- One: DW 1
-0033: 0000; -- Normal: DW &amp;B00
-0034: 0001; -- Stack: DW &amp;B01
-0035: 0002; -- Queue: DW &amp;B10
-0036: 0003; -- Circular: DW &amp;B11
-[0037..07FF] : 0000; -- [empty memory]
+0015: 4847; --     AND One
+0016: 400D; --     JZERO Record
+0017: 084A; -- LOAD MemSize
+0018: 9874; -- OUT ExtMemResize
+0019: 8037; --     CALL SleepShort
+001A: 9070; --     IN ExtMem
+001B: 9801; --     OUT LEDs
+001C: 084A; --     LOAD MemSize
+001D: 6FFF; --     ADDI -1
+001E: 104A; --     STORE MemSize
+001F: 4024; --     JZERO End
+0020: 9000; --     IN Switches
+0021: 6019; --     SHIFT -9
+0022: 4847; --     AND One
+0023: 3819; --     JPOS Playback
+0024: B8FF; --     LOADI &amp;HFF
+0025: 6008; --     SHIFT 8
+0026: 68FF; --     ADDI &amp;HFF
+0027: 9804; --     OUT Hex0
+0028: 802A; --     CALL WaitToContinue
+0029: 2800; -- JUMP Start
+002A: 803F; --         CALL Sleep
+002B: 9000; --         IN Switches
+002C: 9801; --         OUT LEDs
+002D: 6019; --         SHIFT -9
+002E: 4847; --         AND One
+002F: 402A; --         JZERO Up
+0030: 803F; --         CALL Sleep
+0031: 9000; --         IN Switches
+0032: 9801; --         OUT LEDs
+0033: 6019; --         SHIFT -9
+0034: 4847; --         AND One
+0035: 3830; --         JPOS Down
+0036: 8800; --     RETURN
+0037: B800; --     LOADI 0
+0038: 1048; --     STORE Count
+0039: 0848; --         LOAD Count
+003A: 6801; --         ADDI 1
+003B: 1048; --         STORE Count
+003C: 2049; --         SUB MaxCount
+003D: 3039; --         JNEG Loop
+003E: 8800; --     RETURN
+003F: 9802; --     OUT Timer
+0040: 9002; --         IN Timer
+0041: 6FFF; --         ADDI -1
+0042: 3040; --         JNEG WaitingLoop
+0043: 8800; --     RETURN
+0044: B800; --     LOADI 0
+0045: 9804; --     OUT Hex0
+0046: 8800; --     RETURN
+0047: 0001; -- One: DW 1
+0048: 0000; -- Count: DW 0
+0049: 3417; -- MaxCount: DW 13335
+004A: 0000; -- MemSize: DW 0
+004B: FFFF; -- MaxMemSize: DW &amp;HFFFF
+004C: 0000; -- Normal: DW &amp;B00
+004D: 0001; -- Stack: DW &amp;B01
+004E: 0002; -- Queue: DW &amp;B10
+004F: 0003; -- Circular: DW &amp;B11
+[0050..07FF] : 0000; -- [empty memory]
 END;
 
