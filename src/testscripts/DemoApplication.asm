@@ -17,12 +17,23 @@ Start:
     OUT ExtMemMode
     LOADI &B111
     OUT ExtMemMeta
+    LOAD MaxMemSize
+    OUT ExtMemResize
+
+    ; Reset recording length
+    LOADI 0
+    STORE MemSize
 
     CALL WaitToContinue
 
 ; Record switch inputs, stop when left switch goes up
 Record:
     CALL SleepShort
+
+    ; Determine recording length
+    LOAD MemSize
+    ADDI 1
+    STORE MemSize
 
     ; Record switch inputs
     IN Switches
@@ -34,6 +45,10 @@ Record:
     AND One
     JZERO Record
 
+; Set playback length
+LOAD MemSize
+OUT ExtMemResize
+
 ; Playback recorded data, stop when left switch goes down
 Playback:
     CALL SleepShort
@@ -41,6 +56,12 @@ Playback:
     ; Display stored data
     IN ExtMem
     OUT LEDs
+
+    ; Check if playback is done
+    LOAD MemSize
+    ADDI -1
+    STORE MemSize
+    JZERO End
 
     ; Check for break condition
     IN Switches
@@ -109,6 +130,8 @@ Clear:
 One: DW 1
 Count: DW 0
 MaxCount: DW 13335
+MemSize: DW 0
+MaxMemSize: DW &HFFFF
 Normal: DW &B00
 Stack: DW &B01
 Queue: DW &B10
