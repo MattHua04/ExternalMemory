@@ -22,7 +22,7 @@ Start:
 
 ; Record switch inputs, stop when left switch goes up
 Record:
-    CALL Sleep
+    CALL SleepShort
 
     ; Record switch inputs
     IN Switches
@@ -36,7 +36,7 @@ Record:
 
 ; Playback recorded data, stop when left switch goes down
 Playback:
-    CALL Sleep
+    CALL SleepShort
     
     ; Display stored data
     IN ExtMem
@@ -108,7 +108,7 @@ Clear:
 ; Variables
 One: DW 1
 Count: DW 0
-MaxCount: DW 13336
+MaxCount: DW 13335
 Normal: DW &B00
 Stack: DW &B01
 Queue: DW &B10
