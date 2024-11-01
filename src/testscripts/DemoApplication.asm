@@ -85,6 +85,10 @@ SleepShort:
     Loop:
         LOAD Count
         ADDI 1
+        STORE Count
+        SUB MaxCount
+        JNEG Loop
+    RETURN
 
 ; Sleep for 0.1 seconds
 Sleep:
@@ -104,6 +108,7 @@ Clear:
 ; Variables
 One: DW 1
 Count: DW 0
+MaxCount: DW 13336
 Normal: DW &B00
 Stack: DW &B01
 Queue: DW &B10
