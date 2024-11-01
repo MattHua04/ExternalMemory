@@ -78,6 +78,14 @@ WaitToContinue:
         JPOS Down
     RETURN
 
+; Sleep for 1/60 seconds
+SleepShort:
+    LOADI 0
+    STORE Count
+    Loop:
+        LOAD Count
+        ADDI 1
+
 ; Sleep for 0.1 seconds
 Sleep:
     OUT Timer
@@ -95,6 +103,7 @@ Clear:
 
 ; Variables
 One: DW 1
+Count: DW 0
 Normal: DW &B00
 Stack: DW &B01
 Queue: DW &B10

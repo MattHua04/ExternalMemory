@@ -197,26 +197,17 @@ begin
                         mem_in_data_a(15 downto 0) <= io_data;  -- Load data
                         mem_addr_a <= std_logic_vector(to_unsigned(write_addr, 16));  -- Set memory address tp write to
                         mem_addr_b <= std_logic_vector(to_unsigned(read_addr, 16));  -- Watch read address for future popping
-                        -- Cap write address if full, don't write when full
-                        if (write_addr /= read_addr or full = '0') and write_addr < (effective_size - 1) then
-                            write_addr <= write_addr + 1;  -- Increment write address
+                        -- Only write when not full
+                        if full = '0' then
                             write_enable <= '1';
-                            if (write_addr + 1) = read_addr then
-                                full <= '1';  -- Set full flag
+                            write_addr <= (write_addr + 1) mod effective_size;
+                            if ((write_addr + 1) mod effective_size) = read_addr then
+                                full <= '1';
                             else
-                                full <= '0';  -- Reset full flag
-                            end if;
-                        -- Wrap write address
-                        elsif (write_addr /= read_addr or full = '0') and write_addr = (effective_size - 1) then
-                            write_addr <= 0;
-                            write_enable <= '1';
-                            if read_addr = 0 then
-                                full <= '1';  -- Set full flag
-                            else
-                                full <= '0';  -- Reset full flag
+                                full <= '0';
                             end if;
                         else
-                            full <= '1';  -- Set full flag
+                            full <= '1';
                             write_enable <= '0';
                         end if;
 
@@ -224,21 +215,17 @@ begin
                         mem_in_data_a(31 downto 16) <= mem_meta;  -- Load metadata
                         mem_in_data_a(15 downto 0) <= io_data;  -- Load data
                         mem_addr_a <= std_logic_vector(to_unsigned(write_addr, 16));  -- Set memory address to write to
-
+                        
+                        -- Increment/wrap read address if full
                         if write_addr = read_addr and full = '1' then
-                            full <= '1';  -- Set full flag
-                            read_addr <= read_addr + 1;  -- Increment read address if full
-                            mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
+                            read_addr <= (read_addr + 1) mod effective_size;
+                            mem_addr_b <= std_logic_vector(to_unsigned((read_addr + 1) mod effective_size, 16));
                         else
-                            mem_addr_b <= std_logic_vector(to_unsigned(read_addr, 16));  -- Watch read address for future popping
+                            mem_addr_b <= std_logic_vector(to_unsigned(read_addr, 16));
                         end if;
 
                         -- Wrap write address
-                        if write_addr = (effective_size - 1) then
-                            write_addr <= 0;
-                        else
-                            write_addr <= write_addr + 1;  -- Increment write address
-                        end if;
+                        write_addr <= (write_addr + 1) mod effective_size;
 
                         -- Always enable writing in circular mode
                         write_enable <= '1';
@@ -274,37 +261,30 @@ begin
                         mem_addr_a <= std_logic_vector(to_unsigned(read_addr, 16));  -- Set address to pop from
                         mem_in_data_a <= mem_out_data_b;  -- Preserve data and permissions
                         mem_in_data_a(18) <= '0';  -- Mark as available
-                        write_enable <= '1';
 
                         -- Update read address
                         if full = '1' or read_addr /= write_addr then
                             full <= '0';  -- Reset full flag
-                            if read_addr = (effective_size - 1) then
-                                -- Wrap read address
-                                read_addr <= 0;
-                                mem_addr_b <= std_logic_vector(to_unsigned(0, 16));  -- Watch read address for future popping
-                            elsif full = '1' or read_addr < write_addr then
-                                read_addr <= read_addr + 1;  -- Increment read address
-                                mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
-                            end if;
+                            write_enable <= '1';
+                            read_addr <= (read_addr + 1) mod effective_size;
+                            mem_addr_b <= std_logic_vector(to_unsigned((read_addr + 1) mod effective_size, 16));
+                        else
+                            write_enable <= '0';
                         end if;
 
                     when "11" =>  -- Circular mode
                         mem_addr_a <= std_logic_vector(to_unsigned(read_addr, 16));  -- Set address to pop from
                         mem_in_data_a <= mem_out_data_b;  -- Preserve data and permissions
                         mem_in_data_a(18) <= '0';  -- Mark as available
-                        write_enable <= '1';
 
                         -- Update read address
                         if full = '1' or read_addr /= write_addr then
                             full <= '0';  -- Reset full flag
-                            if read_addr = (effective_size - 1) then
-                                read_addr <= 0;  -- Wrap read address
-                                mem_addr_b <= std_logic_vector(to_unsigned(0, 16));  -- Watch read address for future popping
-                            elsif full = '1' or read_addr < write_addr then
-                                read_addr <= read_addr + 1;  -- Increment read address
-                                mem_addr_b <= std_logic_vector(to_unsigned(read_addr + 1, 16));  -- Watch read address for future popping
-                            end if;
+                            write_enable <= '1';
+                            read_addr <= (read_addr + 1) mod effective_size;
+                            mem_addr_b <= std_logic_vector(to_unsigned((read_addr + 1) mod effective_size, 16));
+                        else
+                            write_enable <= '0';
                         end if;
 
                     when others =>  -- Default case
