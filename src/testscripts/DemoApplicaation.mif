@@ -1,0 +1,62 @@
+WIDTH=16;
+DEPTH=2048;
+
+ADDRESS_RADIX=HEX;
+DATA_RADIX=HEX;
+
+CONTENT BEGIN
+0000: B8AA; --     LOADI &HAA
+0001: 6008; --     SHIFT 8
+0002: 68AA; --     ADDI &HAA
+0003: 9804; --     OUT Hex0
+0004: 0834; --     LOAD Circular
+0005: 9871; --     OUT ExtMemMode
+0006: B807; --     LOADI &B111
+0007: 9873; --     OUT ExtMemMeta
+0008: 801B; --     CALL WaitToContinue
+0009: 9000; --     IN Switches
+000A: 9870; --     OUT ExtMem
+000B: 9801; --     OUT LEDs
+000C: 6019; --     SHIFT -9
+000D: 4830; --     AND One
+000E: 4009; --     JZERO Record
+000F: 9070; --     IN ExtMem
+0010: 9801; --     OUT LEDs
+0011: 9000; --     IN Switches
+0012: 6019; --     SHIFT -9
+0013: 4830; --     AND One
+0014: 380F; --     JPOS Playback
+0015: B8FF; --     LOADI &HFF
+0016: 6008; --     SHIFT 8
+0017: 68FF; --     ADDI &HFF
+0018: 9804; --     OUT Hex0
+0019: 801B; --     CALL WaitToContinue
+001A: 2800; -- JUMP Start
+001B: 8028; --         CALL Sleep
+001C: 9000; --         IN Switches
+001D: 9801; --         OUT LEDs
+001E: 6019; --         SHIFT -9
+001F: 4830; --         AND One
+0020: 401B; --         JZERO Up
+0021: 8028; --         CALL Sleep
+0022: 9000; --         IN Switches
+0023: 9801; --         OUT LEDs
+0024: 6019; --         SHIFT -9
+0025: 4830; --         AND One
+0026: 3821; --         JPOS Down
+0027: 8800; --     RETURN
+0028: 9802; --     OUT Timer
+0029: 9002; --         IN Timer
+002A: 6FFF; --         ADDI -1
+002B: 3029; --         JNEG WaitingLoop
+002C: 8800; --     RETURN
+002D: B800; --     LOADI 0
+002E: 9804; --     OUT Hex0
+002F: 8800; --     RETURN
+0030: 0001; -- One: DW 1
+0031: 0000; -- Normal: DW &B00
+0032: 0001; -- Stack: DW &B01
+0033: 0002; -- Queue: DW &B10
+0034: 0003; -- Circular: DW &B11
+[0035..07FF] : 0000; -- [empty memory]
+END;
