@@ -78,7 +78,7 @@ WaitToContinue:
         JPOS Down
     RETURN
 
-; Sleep for 1/60 seconds
+; Sleep for about 1/60 seconds
 SleepShort:
     LOADI 0
     STORE Count
