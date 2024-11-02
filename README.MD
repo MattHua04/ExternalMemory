@@ -1,6 +1,6 @@
 <h1 align="center">GT ECE 2031 Final Project Fall 2024</h1>
 <h3 align="center">SCOMP External Memory Peripheral Usage</h3>
-<p align="center">[View the peripheral API for additional details](docs/SCOMP_External_Memory_Peripheral_API.pdf)</p>
+<div align="center">[View the peripheral API for additional details](docs/SCOMP_External_Memory_Peripheral_API.pdf)</div>
 
 ### General I/O:
 
