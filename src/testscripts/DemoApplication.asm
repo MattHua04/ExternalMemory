@@ -55,7 +55,7 @@ Record:
     AND One
     JZERO Record
 
-; Display CCCC to represent recording
+    ; Display CCCC to represent recording
     LOADI &HCC
     SHIFT 8
     ADDI &HCC
