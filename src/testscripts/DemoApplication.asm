@@ -32,8 +32,12 @@ Record:
 
     ; Determine recording length
     LOAD MemSize
+    SUB MaxMemSize
+    JZERO Pass
+    LOAD MemSize
     ADDI 1
     STORE MemSize
+    Pass:
 
     ; Record switch inputs
     IN Switches
