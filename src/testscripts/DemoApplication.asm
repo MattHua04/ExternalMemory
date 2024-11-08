@@ -26,6 +26,12 @@ Start:
 
     CALL WaitToContinue
 
+    ; Display BBBB to represent recording
+    LOADI &HBB
+    SHIFT 8
+    ADDI &HBB
+    OUT Hex0
+
 ; Record switch inputs, stop when left switch goes up
 Record:
     CALL Sleep
@@ -48,6 +54,12 @@ Record:
     SHIFT -9
     AND One
     JZERO Record
+
+; Display CCCC to represent recording
+    LOADI &HCC
+    SHIFT 8
+    ADDI &HCC
+    OUT Hex0
 
 ; Playback recorded data, stop when left switch goes down
 Playback:
