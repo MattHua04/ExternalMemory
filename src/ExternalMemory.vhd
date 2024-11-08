@@ -114,9 +114,9 @@ begin
 
     -- Control memory read access
     io_out <= (cs and not(io_write));
-    process(clock)
+    process (clock)
     begin
-        if (rising_edge(clock)) then
+        if rising_edge(clock) then
             -- Check read permission in stack, queue, and circular modes, override if password matches metadata
             if mem_mode /= "00" and not(full = '0' and read_addr = write_addr) and (mem_out_data_b(18) = '0' or mem_out_data_b(17) = '1' or mem_meta(15 downto 3) = mem_out_data_b(31 downto 19)) then
                 mem_out_data_permitted <= mem_out_data_b;
@@ -143,9 +143,9 @@ begin
             mem_addr_b <= (others => '0');
             full <= '0';  -- Reset full flag
         
-        elsif (rising_edge(clock)) then
+        elsif rising_edge(clock) then
             -- Setting memory device mode, address, and metadata based on IO address
-            if (mode_en = '1' and io_write = '1') then
+            if mode_en = '1' and io_write = '1' then
                 mem_mode <= io_data(1 downto 0);  -- Set mode
                 read_addr <= 0;  -- Reset read address on mode change
                 write_addr <= 0;  -- Reset write address on mode change
@@ -153,16 +153,16 @@ begin
                 mem_addr_b <= (others => '0');
                 full <= '0';  -- Reset full flag on mode change
             -- Only set address in normal mode
-            elsif (addr_en = '1' and io_write = '1' and mem_mode = "00") then
+            elsif addr_en = '1' and io_write = '1' and mem_mode = "00" then
                 mem_addr_a <= io_data;
             -- Set metadata
-            elsif (meta_en = '1' and io_write = '1') then
+            elsif meta_en = '1' and io_write = '1' then
                 mem_meta <= io_data;
             -- Resize memory
-            elsif (resize_en = '1' and io_write = '1') then
+            elsif resize_en = '1' and io_write = '1' then
                 effective_size <= to_integer(unsigned(io_data));
             -- Write to memory
-            elsif (cs = '1' and io_write = '1') then
+            elsif cs = '1' and io_write = '1' then
                 mem_meta(15 downto 3) <= (others => '0');  -- Clear password bits on write for security
                 case mem_mode is
                     when "00" =>  -- Normal mode
@@ -171,7 +171,7 @@ begin
                         mem_in_data_a(15 downto 0) <= io_data;  -- Load data
 
                         -- Check for valid write address and metadata for write permission from the memory output data
-                        if (to_integer(unsigned(mem_addr_a)) < effective_size) and ((mem_out_data_a(16) = '1') or (mem_out_data_a(18) = '0') or (mem_meta(15 downto 3) = mem_out_data_a(31 downto 19))) then
+                        if to_integer(unsigned(mem_addr_a)) < effective_size and ((mem_out_data_a(16) = '1') or (mem_out_data_a(18) = '0') or (mem_meta(15 downto 3) = mem_out_data_a(31 downto 19))) then
                             write_enable <= '1';
                         else
                             write_enable <= '0';
@@ -183,7 +183,7 @@ begin
                         mem_addr_a <= std_logic_vector(to_unsigned(write_addr, 16));  -- Set memory address to write to
 
                         -- Cap read and write addresses, don't write when full
-                        if (read_addr < (effective_size - 1) and write_addr < effective_size) then
+                        if read_addr < (effective_size - 1) and write_addr < effective_size then
                             read_addr <= write_addr;  -- Set read address to previous write address
                             mem_addr_b <= std_logic_vector(to_unsigned(write_addr, 16));  -- Watch read address for future popping
                             write_addr <= write_addr + 1;  -- Increment write address
@@ -201,7 +201,7 @@ begin
                         if full = '0' then
                             write_enable <= '1';
                             write_addr <= (write_addr + 1) mod effective_size;
-                            if ((write_addr + 1) mod effective_size) = read_addr then
+                            if (write_addr + 1) mod effective_size = read_addr then
                                 full <= '1';
                             else
                                 full <= '0';
