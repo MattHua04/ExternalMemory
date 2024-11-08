@@ -28,7 +28,7 @@ Start:
 
 ; Record switch inputs, stop when left switch goes up
 Record:
-    CALL SleepShort
+    CALL Sleep
 
     ; Determine recording length
     LOAD Length
@@ -51,7 +51,7 @@ Record:
 
 ; Playback recorded data, stop when left switch goes down
 Playback:
-    CALL SleepShort
+    CALL Sleep
     
     ; Display stored data
     IN ExtMem
@@ -98,18 +98,6 @@ WaitToContinue:
         SHIFT -9
         AND One
         JPOS Down
-    RETURN
-
-; Sleep for about 1/60 seconds
-SleepShort:
-    LOADI 0
-    STORE Count
-    Loop:
-        LOAD Count
-        ADDI 1
-        STORE Count
-        SUB MaxCount
-        JNEG Loop
     RETURN
 
 ; Sleep for 0.1 seconds
