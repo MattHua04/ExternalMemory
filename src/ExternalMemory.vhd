@@ -129,16 +129,16 @@ begin
                 end if;
             elsif mode_en = '1' then
                 -- Return memory mode
-                mem_out_data_permitted <= (others => '0') & mem_mode;
+                mem_out_data_permitted <= (15 downto 2 => '0') & mem_mode;
             elsif addr_en = '1' then
                 -- Return memory address
                 mem_out_data_permitted <= mem_addr_a;
             elsif meta_en = '1' then
                 -- Return metadata excluding password bits
-                mem_out_data_permitted <= (others => '0') & mem_meta(2 downto 0);
+                mem_out_data_permitted <= (15 downto 3 => '0') & mem_meta(2 downto 0);
             elsif resize_en = '1' then
                 -- Return effective memory size
-                mem_out_data_permitted <= (others => '0') & std_logic_vector(to_unsigned(effective_size, 16));
+                mem_out_data_permitted <= std_logic_vector(to_unsigned(effective_size, 16));
             else
                 -- Null output otherwise
                 mem_out_data_permitted <= (others => '0');
