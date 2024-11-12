@@ -6,13 +6,13 @@
 
 ### General I/O:
 
-In:
+__In:__
 * A value read from address ```0x71``` corresponds with the numerical identifier of the current __memory mode__ (see below for details)
 * A value read from address ```0x72``` corresponds with the current __write address__
 * A value read from address ```0x73``` corresponds with the current metadata __excluding the access password__
 * A value read from address ```0x74``` corresponds with the current __effective memory size__
 
-Out:
+__Out:__
 * A value sent to address ```0x71``` sets the __memory mode__ and __resets the read and write addresses to 0__
     * ```0b00```: Normal
     * ```0b01```: Stack
