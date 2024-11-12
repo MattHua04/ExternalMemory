@@ -132,7 +132,7 @@ begin
                 mem_out_data_permitted <= (31 downto 2 => '0') & mem_mode;
             elsif addr_en = '1' then
                 -- Return memory address
-                mem_out_data_permitted <= mem_addr_a;
+                mem_out_data_permitted <= (31 downto 16 => '0') & mem_addr_a;
             elsif meta_en = '1' then
                 -- Return metadata excluding password bits
                 mem_out_data_permitted <= (31 downto 3 => '0') & mem_meta(2 downto 0);
