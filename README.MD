@@ -6,8 +6,13 @@
 
 ### General I/O:
 
----
+In:
+* A value read from address ```0x71``` corresponds with the numerical identifier of the current __memory mode__ (see below for details)
+* A value read from address ```0x72``` corresponds with the current __write address__
+* A value read from address ```0x73``` corresponds with the current metadata __excluding the access password__
+* A value read from address ```0x74``` corresponds with the current __effective memory size__
 
+Out:
 * A value sent to address ```0x71``` sets the __memory mode__ and __resets the read and write addresses to 0__
     * ```0b00```: Normal
     * ```0b01```: Stack
@@ -22,8 +27,6 @@
 * A value sent to address ```0x74``` sets the __effective size__ of the memory peripheral in 16-bit words out of a maximum of __2^16__ or __65,536__ words
 
 ### Mode specific I/O:
-
----
 
 #### Normal mode:
 * Reading from address ```0x70``` returns the data at the current memory address __(only if the metadata allows reading or a matching password is provided in the current metadata register)__
