@@ -114,35 +114,33 @@ begin
 
     -- Control memory read access
     io_out <= ((cs or mode_en or addr_en or meta_en or resize_en) and not(io_write));
-    process (clock)
+    process (cs, mode_en, addr_en, meta_en, resize_en, mem_out_data_a, mem_out_data_b, mem_mode, mem_addr_a, mem_meta, effective_size)
     begin
-        if rising_edge(clock) then
-            if cs = '1' then
-                -- Check read permission in stack, queue, and circular modes, override if password matches metadata
-                if mem_mode /= "00" and not(full = '0' and read_addr = write_addr) and (mem_out_data_b(18) = '0' or mem_out_data_b(17) = '1' or mem_meta(15 downto 3) = mem_out_data_b(31 downto 19)) then
-                    mem_out_data_permitted <= mem_out_data_b;
-                -- Check for valid read address and read permission in normal mode, override if password matches metadata
-                elsif mem_mode = "00" and (to_integer(unsigned(mem_addr_a)) < effective_size) and (mem_out_data_a(18) = '0' or mem_out_data_a(17) = '1' or mem_meta(15 downto 3) = mem_out_data_a(31 downto 19)) then
-                    mem_out_data_permitted <= mem_out_data_a;
-                else
-                    mem_out_data_permitted <= (others => '0');  -- Null output if access denied
-                end if;
-            elsif mode_en = '1' then
-                -- Return memory mode
-                mem_out_data_permitted <= (31 downto 2 => '0') & mem_mode;
-            elsif addr_en = '1' then
-                -- Return memory address
-                mem_out_data_permitted <= (31 downto 16 => '0') & mem_addr_a;
-            elsif meta_en = '1' then
-                -- Return metadata excluding password bits
-                mem_out_data_permitted <= (31 downto 3 => '0') & mem_meta(2 downto 0);
-            elsif resize_en = '1' then
-                -- Return effective memory size
-                mem_out_data_permitted <= (31 downto 16 => '0') & std_logic_vector(to_unsigned(effective_size, 16));
+        if cs = '1' then
+            -- Check read permission in stack, queue, and circular modes, override if password matches metadata
+            if mem_mode /= "00" and not(full = '0' and read_addr = write_addr) and (mem_out_data_b(18) = '0' or mem_out_data_b(17) = '1' or mem_meta(15 downto 3) = mem_out_data_b(31 downto 19)) then
+                mem_out_data_permitted <= mem_out_data_b;
+            -- Check for valid read address and read permission in normal mode, override if password matches metadata
+            elsif mem_mode = "00" and (to_integer(unsigned(mem_addr_a)) < effective_size) and (mem_out_data_a(18) = '0' or mem_out_data_a(17) = '1' or mem_meta(15 downto 3) = mem_out_data_a(31 downto 19)) then
+                mem_out_data_permitted <= mem_out_data_a;
             else
-                -- Null output otherwise
-                mem_out_data_permitted <= (others => '0');
+                mem_out_data_permitted <= (others => '0');  -- Null output if access denied
             end if;
+        elsif mode_en = '1' then
+            -- Return memory mode
+            mem_out_data_permitted <= (31 downto 2 => '0') & mem_mode;
+        elsif addr_en = '1' then
+            -- Return memory address
+            mem_out_data_permitted <= (31 downto 16 => '0') & mem_addr_a;
+        elsif meta_en = '1' then
+            -- Return metadata excluding password bits
+            mem_out_data_permitted <= (31 downto 3 => '0') & mem_meta(2 downto 0);
+        elsif resize_en = '1' then
+            -- Return effective memory size
+            mem_out_data_permitted <= (31 downto 16 => '0') & std_logic_vector(to_unsigned(effective_size, 16));
+        else
+            -- Null output otherwise
+            mem_out_data_permitted <= (others => '0');
         end if;
     end process;
 
